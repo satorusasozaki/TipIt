@@ -44,7 +44,6 @@ class TipViewController: UIViewController, UITextFieldDelegate {
     }
     
     private func getTipPercent() -> Double {
-        let tippercent = percentControl.titleForSegmentAtIndex(percentControl.selectedSegmentIndex)
         let percent = ud?.objectForKey("percents")![percentControl.selectedSegmentIndex] as! Double
         return percent
     }
