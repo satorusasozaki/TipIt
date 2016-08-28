@@ -24,8 +24,10 @@ class TipViewController: UIViewController, UITextFieldDelegate {
         print(#function)
         billField.delegate = self
         billField.addTarget(self, action: #selector(TipViewController.updateLabels), forControlEvents: UIControlEvents.EditingChanged)
+        percentControl.addTarget(self, action: #selector(TipViewController.updateLabels), forControlEvents: UIControlEvents.ValueChanged)
         ud = NSUserDefaults.standardUserDefaults()
-        ud?.setObject([0.1, 0.15, 0.2], forKey: "percents")
+        ud?.setObject([0.2, 0.15, 0.2], forKey: "percents")
+        setupPercentControl()
     }
 
     @IBAction func onTapTipViewController(sender: UITapGestureRecognizer) {
@@ -37,15 +39,27 @@ class TipViewController: UIViewController, UITextFieldDelegate {
         let percent = getTipPercent()
         let total = CalculatorBrain.getTotalAmount(bill, percent: percent)
         let tip = CalculatorBrain.getTipAmount(bill, percent: percent)
-        tipLabel.text = String(tip)
-        totalLabel.text = String(total)
-        splitByTwoLabel.text = String(CalculatorBrain.splitBy(total, numOfPeople: 2))
-        splitByThreeLabel.text = String(CalculatorBrain.splitBy(total, numOfPeople: 3))
+        tipLabel.text = String(format: "%.2f", tip)
+        totalLabel.text = String(format: "%.2f", total)
+        splitByTwoLabel.text = String(format: "%.2f", CalculatorBrain.splitBy(total, numOfPeople: 2))
+        splitByThreeLabel.text = String(format: "%.2f", CalculatorBrain.splitBy(total, numOfPeople: 3))
     }
     
     private func getTipPercent() -> Double {
         let percent = ud?.objectForKey("percents")![percentControl.selectedSegmentIndex] as! Double
         return percent
     }
-
+    
+    private func setupPercentControl() {
+        let percents = ud?.objectForKey("percents") as! [Double]
+        for index in 0..<percents.count {
+            let percent = String(format: "%.0f", percents[index]*100)
+            percentControl.setTitle("\(percent)%", forSegmentAtIndex: index)
+        }
+    }
+    
+    func redraw() {
+        updateLabels()
+        setupPercentControl()
+    }
 }
