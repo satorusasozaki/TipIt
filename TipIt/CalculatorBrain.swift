@@ -21,7 +21,7 @@ class CalculatorBrain: NSObject {
         return roundToTwo(total / Double(numOfPeople))
     }
     
-    private class func roundToTwo(num: Double) -> Double {
+    class func roundToTwo(num: Double) -> Double {
         return round(100 * num) / 100
     }
 }

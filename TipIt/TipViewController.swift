@@ -62,4 +62,8 @@ class TipViewController: UIViewController, UITextFieldDelegate {
         updateLabels()
         setupPercentControl()
     }
+    @IBAction func onSettingButton(sender: UIBarButtonItem) {
+        let settingTableViewController = storyboard?.instantiateViewControllerWithIdentifier("SettingTableViewController")
+        navigationController?.pushViewController(settingTableViewController!, animated: true)
+    }
 }
