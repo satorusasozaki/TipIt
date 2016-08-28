@@ -32,6 +32,8 @@ class TipViewController: UIViewController, UITextFieldDelegate {
         ud?.setObject(false, forKey: "theme")
         setupPercentControl()
         updateTheme()
+        print(getCurrencySymbol())
+        billField.placeholder = getCurrencySymbol()
     }
 
     @IBAction func onTapTipViewController(sender: UITapGestureRecognizer) {
@@ -52,10 +54,10 @@ class TipViewController: UIViewController, UITextFieldDelegate {
         let percent = getTipPercent()
         let total = CalculatorBrain.getTotalAmount(bill, percent: percent)
         let tip = CalculatorBrain.getTipAmount(bill, percent: percent)
-        tipLabel.text = String(format: "%.2f", tip)
-        totalLabel.text = String(format: "%.2f", total)
-        splitByTwoLabel.text = String(format: "%.2f", CalculatorBrain.splitBy(total, numOfPeople: 2))
-        splitByThreeLabel.text = String(format: "%.2f", CalculatorBrain.splitBy(total, numOfPeople: 3))
+        tipLabel.text = getCurrencySymbol() + String(format: "%.2f", tip)
+        totalLabel.text = getCurrencySymbol() + String(format: "%.2f", total)
+        splitByTwoLabel.text = getCurrencySymbol() + String(format: "%.2f", CalculatorBrain.splitBy(total, numOfPeople: 2))
+        splitByThreeLabel.text = getCurrencySymbol() + String(format: "%.2f", CalculatorBrain.splitBy(total, numOfPeople: 3))
     }
     
     private func getTipPercent() -> Double {
@@ -71,10 +73,17 @@ class TipViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    func getCurrencySymbol() -> String {
+        let locale = NSLocale.currentLocale()
+        let currencySymbol = locale.objectForKey(NSLocaleCurrencySymbol)!
+        return currencySymbol as! String
+    }
+    
     func redraw() {
         updateLabels()
         setupPercentControl()
     }
+    
     @IBAction func onSettingButton(sender: UIBarButtonItem) {
         let settingTableViewController = storyboard?.instantiateViewControllerWithIdentifier("SettingTableViewController")
         navigationController?.pushViewController(settingTableViewController!, animated: true)
