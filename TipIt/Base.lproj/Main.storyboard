@@ -295,15 +295,18 @@
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="suU-Xw-r8k">
-                                                    <rect key="frame" x="510" y="6" width="51" height="31"/>
-                                                </switch>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yZg-MS-pzv">
-                                                    <rect key="frame" x="8" y="4" width="148" height="35.5"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Dark Theme" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yZg-MS-pzv">
+                                                    <rect key="frame" x="20" y="5" width="148" height="34"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="suU-Xw-r8k">
+                                                    <rect key="frame" x="289" y="6" width="51" height="31"/>
+                                                    <connections>
+                                                        <action selector="onThemeSwitch:" destination="PP8-uM-Lx0" eventType="valueChanged" id="YNR-Ci-wyU"/>
+                                                    </connections>
+                                                </switch>
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -339,6 +342,7 @@
                         <outlet property="changerMaxCell" destination="eeA-a2-XvM" id="7ap-th-H4u"/>
                         <outlet property="changerMidCell" destination="eBu-AH-TDD" id="hhO-Ak-7wZ"/>
                         <outlet property="changerMinCell" destination="KCR-BZ-67V" id="Swb-YH-hNN"/>
+                        <outlet property="themeSwitch" destination="suU-Xw-r8k" id="qwK-Tk-0Xz"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2Hn-w0-nHc" userLabel="First Responder" sceneMemberID="firstResponder"/>

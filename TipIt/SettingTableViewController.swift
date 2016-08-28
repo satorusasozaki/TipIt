@@ -17,11 +17,15 @@ class SettingTableViewController: UITableViewController {
     var ud: NSUserDefaults?
     var tipViewController: TipViewController?
     
+    @IBOutlet weak var themeSwitch: UISwitch!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         ud = NSUserDefaults.standardUserDefaults()
         tipViewController = navigationController?.viewControllers[0] as? TipViewController
         setupPercentCells()
+        let switchState = ud?.objectForKey("theme") as! Bool
+        themeSwitch.setOn(switchState, animated: true)
     }
 
     func setupPercentCells() {
@@ -64,5 +68,12 @@ class SettingTableViewController: UITableViewController {
         tipViewController!.redraw()
     }
     
+    @IBAction func onThemeSwitch(sender: UISwitch) {
+        // get it from nsuserdefault
+        // add method to change color in tip calc
+        let switchState = sender.on ? true : false
+        ud?.setObject(switchState, forKey: "theme")
+        tipViewController?.updateTheme()
+    }
     // switch
 }

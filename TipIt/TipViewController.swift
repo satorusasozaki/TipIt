@@ -26,12 +26,25 @@ class TipViewController: UIViewController, UITextFieldDelegate {
         billField.addTarget(self, action: #selector(TipViewController.updateLabels), forControlEvents: UIControlEvents.EditingChanged)
         percentControl.addTarget(self, action: #selector(TipViewController.updateLabels), forControlEvents: UIControlEvents.ValueChanged)
         ud = NSUserDefaults.standardUserDefaults()
+        
+        // Default setting
         ud?.setObject([0.2, 0.15, 0.2], forKey: "percents")
+        ud?.setObject(false, forKey: "theme")
         setupPercentControl()
+        updateTheme()
     }
 
     @IBAction func onTapTipViewController(sender: UITapGestureRecognizer) {
         self.view.endEditing(true)
+    }
+    
+    func updateTheme() {
+        let switchState = ud?.objectForKey("theme") as! Bool
+        if (switchState) {
+            view.backgroundColor = UIColor.blackColor()
+        } else {
+            view.backgroundColor = UIColor.whiteColor()
+        }
     }
     
     func updateLabels() {
