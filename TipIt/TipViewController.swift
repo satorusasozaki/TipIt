@@ -19,11 +19,19 @@ class TipViewController: UIViewController, UITextFieldDelegate {
 
     var ud: NSUserDefaults?
     
+    @IBOutlet weak var billViewTopConstraint: NSLayoutConstraint!
+
+    @IBOutlet weak var labelsView: UIView!
+    @IBOutlet weak var labelsViewTopConstraint: NSLayoutConstraint!
+    
+    var textFieldIsEmpty: Bool?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         print(#function)
         billField.delegate = self
         billField.addTarget(self, action: #selector(TipViewController.updateLabels), forControlEvents: UIControlEvents.EditingChanged)
+        billField.addTarget(self, action: #selector(TipViewController.animateViews), forControlEvents: UIControlEvents.EditingChanged)
         percentControl.addTarget(self, action: #selector(TipViewController.updateLabels), forControlEvents: UIControlEvents.ValueChanged)
         ud = NSUserDefaults.standardUserDefaults()
         
@@ -34,7 +42,57 @@ class TipViewController: UIViewController, UITextFieldDelegate {
         updateTheme()
         print(getCurrencySymbol())
         billField.placeholder = getCurrencySymbol()
+        
+        billViewTopConstraint.constant = getTopConstraint(false)
+        self.labelsView.alpha = 0
+
+        setLabelConstraints(false)
+        
+        textFieldIsEmpty = true
+        
+        
+
+        print(getTopConstraint(false))
     }
+    
+    func animateViews() {
+        // research let if
+        if (!textFieldIsEmpty! && billField.text!.isEmpty) {
+            textFieldIsEmpty = true
+            billViewTopConstraint.constant = getTopConstraint(false)
+            setLabelConstraints(false)
+            self.labelsView.alpha = 1
+            UIView.animateWithDuration(0.4, animations: {
+                self.labelsView.alpha = 0
+                self.view.layoutIfNeeded()
+            })
+        } else if (textFieldIsEmpty! && !billField.text!.isEmpty){
+            textFieldIsEmpty = false
+            billViewTopConstraint.constant = getTopConstraint(true)
+            setLabelConstraints(true)
+            self.labelsView.alpha = 0
+            UIView.animateWithDuration(0.4, animations: {
+                self.labelsView.alpha = 1
+                self.view.layoutIfNeeded()
+            })
+        }
+    }
+    
+    private func setLabelConstraints(isAnimated: Bool) {
+        if(isAnimated) {
+            labelsViewTopConstraint.constant = 30
+        } else {
+            labelsViewTopConstraint.constant = 100
+        }
+    }
+    
+    private func getTopConstraint(isAnimated: Bool) -> CGFloat{
+        if (isAnimated) {
+            return 0
+        }
+        return UIScreen.mainScreen().bounds.size.height / 3
+    }
+    
 
     @IBAction func onTapTipViewController(sender: UITapGestureRecognizer) {
         self.view.endEditing(true)
