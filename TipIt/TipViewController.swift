@@ -51,7 +51,7 @@ class TipViewController: UIViewController, UITextFieldDelegate {
         textFieldIsEmpty = true
         
         
-
+        billField.becomeFirstResponder()
         print(getTopConstraint(false))
     }
     
