@@ -7,6 +7,10 @@
 //
 
 import UIKit
+final class {
+
+};
+
 
 class UserManager: NSObject {
     
@@ -17,11 +21,13 @@ class UserManager: NSObject {
     
     var percentsKey: String?
     var themeKey: String?
+    var lastBillKey: String?
     
     override init() {
         ud = NSUserDefaults.standardUserDefaults()
         percentsKey = "percents"
         themeKey = "theme"
+        lastBillKey = "lastBill"
         super.init()
     }
     
@@ -42,6 +48,10 @@ class UserManager: NSObject {
     func getTheme() -> Bool {
         return ud?.objectForKey(themeKey!) as! Bool
     }
+    //(min: Int, max: Int)
+    func getLastBillAndDate() -> (bill: Double, date: NSDate) {
+        return ud?.objectForKey(lastBillKey!) as! Double
+    }
     
     func setPercentAtIndex(index: Int, value: Double) -> Void {
         if (index >= 0 && index < 3) {
@@ -56,5 +66,14 @@ class UserManager: NSObject {
     func setTheme(dark: Bool) {
         ud?.setObject(dark, forKey: themeKey!)
     }
+    
+    
+    func setLastBill(bill: Double) {
+        var lastTime: [String:NSDate] = ["time":NSDate()]
+        var
+        ud?.setObject([, forKey: <#T##String#>)
+    }
+    
+    
 
 }
