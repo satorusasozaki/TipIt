@@ -17,6 +17,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         print(#function)
+        
+        // Test UserManager
+        let user = UserManager()
+        user.setPercents(0, value: 0.1)
+        user.setPercents(1, value: 0.15)
+        user.setPercents(2, value: 0.2)
+        user.setTheme(true)
+        print("\(user.getPercents())\t [0.1, 0.15, 0.2] is expected\n")
+        print("\(user.getTheme())\t true is expected\n")
+        
         return true
     }
 

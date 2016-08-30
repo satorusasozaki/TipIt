@@ -78,6 +78,10 @@ class TipViewController: UIViewController, UITextFieldDelegate {
         print(getTopConstraint(false))
     }
     
+    private func saveFieldValueToNSUserDefault() {
+        
+    }
+    
     func animateViews() {
         // research let if
         if (!textFieldIsEmpty! && billField.text!.isEmpty) {
