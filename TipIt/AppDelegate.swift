@@ -20,12 +20,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Test UserManager
         let user = UserManager()
-        user.setPercents(0, value: 0.1)
-        user.setPercents(1, value: 0.15)
-        user.setPercents(2, value: 0.2)
+        user.setPercentAtIndex(0, value: 0.1)
+        user.setPercentAtIndex(1, value: 0.15)
+        user.setPercentAtIndex(2, value: 0.2)
         user.setTheme(true)
         print("\(user.getPercents())\t [0.1, 0.15, 0.2] is expected\n")
         print("\(user.getTheme())\t true is expected\n")
+        user.setPercentAtIndex(0, value: 6)
+        print("\(user.getPercents()) [6, 0.15, 0.2] is expected\n")
+        print("\(user.getPercentAtIndex(0))\t 0.6 is expected")
+        print("\(user.getPercentAtIndex(1))\t 0.15 is expected")
+        print("\(user.getPercentAtIndex(2))\t 0.2 is expected")
         
         return true
     }

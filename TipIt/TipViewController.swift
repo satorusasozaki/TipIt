@@ -16,8 +16,6 @@ class TipViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var splitByTwoLabel: UILabel!
     @IBOutlet weak var splitByThreeLabel: UILabel!
     @IBOutlet weak var percentControl: UISegmentedControl!
-
-    var ud: NSUserDefaults?
     
     @IBOutlet weak var billViewTopConstraint: NSLayoutConstraint!
 
@@ -25,6 +23,7 @@ class TipViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var labelsViewTopConstraint: NSLayoutConstraint!
     
     var textFieldIsEmpty: Bool?
+    var user: UserManager?
     
     // Calling updateTheme everytime when viewWillAppear gets called is inefficient
     override func viewWillAppear(animated: Bool) {
@@ -56,11 +55,13 @@ class TipViewController: UIViewController, UITextFieldDelegate {
         billField.addTarget(self, action: #selector(TipViewController.updateLabels), forControlEvents: UIControlEvents.EditingChanged)
         billField.addTarget(self, action: #selector(TipViewController.animateViews), forControlEvents: UIControlEvents.EditingChanged)
         percentControl.addTarget(self, action: #selector(TipViewController.updateLabels), forControlEvents: UIControlEvents.ValueChanged)
-        ud = NSUserDefaults.standardUserDefaults()
         
         // Default setting
-        ud?.setObject([0.2, 0.15, 0.2], forKey: "percents")
-        ud?.setObject(false, forKey: "theme")
+        user = UserManager()
+        user?.setPercentAtIndex(0, value: 0.1)
+        user?.setPercentAtIndex(1, value: 0.15)
+        user?.setPercentAtIndex(2, value: 0.29)
+        user?.setTheme(false)
         setupPercentControl()
         updateTheme()
         print(getCurrencySymbol())
@@ -75,7 +76,6 @@ class TipViewController: UIViewController, UITextFieldDelegate {
         
         
         billField.becomeFirstResponder()
-        print(getTopConstraint(false))
     }
     
     private func saveFieldValueToNSUserDefault() {
@@ -125,12 +125,13 @@ class TipViewController: UIViewController, UITextFieldDelegate {
         self.view.endEditing(true)
     }
     
-    func updateTheme() {
-        let switchState = ud?.objectForKey("theme") as! Bool
-        if (switchState) {
-            view.backgroundColor = UIColor.blackColor()
-        } else {
-            view.backgroundColor = UIColor.whiteColor()
+    func updateTheme() {        
+        if let themeState = user?.getTheme() {
+            if themeState {
+                view.backgroundColor = UIColor.blackColor()
+            } else {
+                view.backgroundColor = UIColor.whiteColor()
+            }
         }
     }
     
@@ -146,14 +147,15 @@ class TipViewController: UIViewController, UITextFieldDelegate {
     }
     
     private func getTipPercent() -> Double {
-        let percent = ud?.objectForKey("percents")![percentControl.selectedSegmentIndex] as! Double
-        return percent
+//        let percent = ud?.objectForKey("percents")![percentControl.selectedSegmentIndex] as! Double
+        let percent = user?.getPercents()[percentControl.selectedSegmentIndex]
+        return percent!
     }
     
     private func setupPercentControl() {
-        let percents = ud?.objectForKey("percents") as! [Double]
-        for index in 0..<percents.count {
-            let percent = String(format: "%.0f", percents[index]*100)
+        let percents = user?.getPercents()
+        for index in 0..<percents!.count {
+            let percent = String(format: "%.0f", percents![index]*100)
             percentControl.setTitle("\(percent)%", forSegmentAtIndex: index)
         }
     }
