@@ -32,6 +32,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         print("\(user.getPercentAtIndex(1))\t 0.15 is expected")
         print("\(user.getPercentAtIndex(2))\t 0.2 is expected")
         
+        //user.setLastBill(100.2)
+        
+        let (bill, last) = user.getLastBillAndDate()!
+        print("\(bill) and \(last) are obtained with getLastBillAndDate")
+        
+        print("user.shouldDisplayLastBill is expected to be true: \(user.shouldDisplayLastBill())")
+        
         return true
     }
 

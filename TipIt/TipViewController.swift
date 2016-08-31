@@ -31,6 +31,12 @@ class TipViewController: UIViewController, UITextFieldDelegate {
         print(#function)
 //        updateTheme()
 //        redraw()
+        
+        if ((user?.shouldDisplayLastBill()) != nil) {
+            let lastBill = user?.getLastBill()
+            let lastBillInString = String(lastBill!)
+            billField.text = lastBillInString
+        }
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -54,6 +60,7 @@ class TipViewController: UIViewController, UITextFieldDelegate {
         billField.delegate = self
         billField.addTarget(self, action: #selector(TipViewController.updateLabels), forControlEvents: UIControlEvents.EditingChanged)
         billField.addTarget(self, action: #selector(TipViewController.animateViews), forControlEvents: UIControlEvents.EditingChanged)
+        billField.addTarget(self, action: #selector(TipViewController.saveBill), forControlEvents: UIControlEvents.EditingDidEnd)
         percentControl.addTarget(self, action: #selector(TipViewController.updateLabels), forControlEvents: UIControlEvents.ValueChanged)
         
         // Default setting
@@ -73,13 +80,19 @@ class TipViewController: UIViewController, UITextFieldDelegate {
         setLabelConstraints(false)
         
         textFieldIsEmpty = true
-        
-        
         billField.becomeFirstResponder()
+        if ((user?.shouldDisplayLastBill()) != nil) {
+            let lastBill = user?.getLastBill()
+            let lastBillInString = String(lastBill!)
+            billField.text = lastBillInString
+        }
     }
     
-    private func saveFieldValueToNSUserDefault() {
-        
+    
+    
+    func saveBill() {
+        let billDouble = Double(billField.text!)
+        user?.setLastBill(billDouble!)
     }
     
     func animateViews() {

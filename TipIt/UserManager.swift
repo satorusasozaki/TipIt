@@ -7,10 +7,6 @@
 //
 
 import UIKit
-final class {
-
-};
-
 
 class UserManager: NSObject {
     
@@ -22,12 +18,17 @@ class UserManager: NSObject {
     var percentsKey: String?
     var themeKey: String?
     var lastBillKey: String?
+    var lastDateKey: String?
+    
+    var persistentPeriod: Int?
     
     override init() {
         ud = NSUserDefaults.standardUserDefaults()
         percentsKey = "percents"
         themeKey = "theme"
         lastBillKey = "lastBill"
+        lastDateKey = "lastDate"
+        persistentPeriod = 10 * 60
         super.init()
     }
     
@@ -48,8 +49,15 @@ class UserManager: NSObject {
     func getTheme() -> Bool {
         return ud?.objectForKey(themeKey!) as! Bool
     }
-    //(min: Int, max: Int)
-    func getLastBillAndDate() -> (bill: Double, date: NSDate) {
+    
+    // Call this method after making sure if the last bill should be displayed in bill field callind shouldDisplayLastbill
+    func getLastBillAndDate() -> (bill: Double?, date: NSDate?)? {
+        let lastBill = getLastBill()
+        let lastDate = ud?.objectForKey(lastDateKey!) as! NSDate
+        return (lastBill, lastDate)
+    }
+    
+    func getLastBill() -> Double {
         return ud?.objectForKey(lastBillKey!) as! Double
     }
     
@@ -67,13 +75,25 @@ class UserManager: NSObject {
         ud?.setObject(dark, forKey: themeKey!)
     }
     
-    
     func setLastBill(bill: Double) {
-        var lastTime: [String:NSDate] = ["time":NSDate()]
-        var
-        ud?.setObject([, forKey: <#T##String#>)
+        ud?.setObject(bill, forKey: lastBillKey!)
+        ud?.setObject(NSDate(), forKey: lastDateKey!)
+        print("\(bill) and \(NSDate()) is set in \(#function)")
     }
     
+    func shouldDisplayLastBill() -> Bool {
+        let last = getLastBillAndDate()
+        if let lastDate = last!.date {
+            //http://stackoverflow.com/questions/11121459/how-to-convert-nstimeinterval-to-int
+            let interval = NSInteger(NSDate().timeIntervalSinceDate(lastDate))
+            if (interval < persistentPeriod) {
+                return true
+            } else {
+                return false
+            }
+        }
+        return true
+    }
     
 
 }
