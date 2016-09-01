@@ -31,6 +31,7 @@ class TipViewController: UIViewController{
         billField.addTarget(self, action: #selector(TipViewController.saveBill), forControlEvents: UIControlEvents.EditingDidEnd)
         percentControl.addTarget(self, action: #selector(TipViewController.setupLabelTexts), forControlEvents: UIControlEvents.ValueChanged)
         
+        billField.text = "123"
         // Default setting
         user = UserManager()
         user?.setPercentAtIndex(0, value: 0.1)
@@ -40,6 +41,7 @@ class TipViewController: UIViewController{
         setupPercentControl()
         setupTheme()
         billField.placeholder = user?.getCurrencySymbol()
+        setupLabelTexts()
         setupBillFieldTopConstraint()
         setupLabelsTopConstraint()
         
@@ -51,9 +53,10 @@ class TipViewController: UIViewController{
             }
         }
         
-        billField.becomeFirstResponder()
+        //billField.becomeFirstResponder()
         
         billFieldWasEmpty = billField.text?.isEmpty
+        
     }
     
     // Calling updateTheme everytime when viewWillAppear gets called is inefficient
