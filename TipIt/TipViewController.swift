@@ -23,6 +23,7 @@ class TipViewController: UIViewController{
     @IBOutlet weak var labelsViewTopConstraint: NSLayoutConstraint!
     
     var user: UserManager?
+    var billFieldWasEmpty: Bool?
     
     // Calling updateTheme everytime when viewWillAppear gets called is inefficient
     override func viewWillAppear(animated: Bool) {
@@ -52,10 +53,10 @@ class TipViewController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         print(#function)
-        billField.addTarget(self, action: #selector(TipViewController.updateLabels), forControlEvents: UIControlEvents.EditingChanged)
+        billField.addTarget(self, action: #selector(TipViewController.setupLabelTexts), forControlEvents: UIControlEvents.EditingChanged)
         billField.addTarget(self, action: #selector(TipViewController.animateViews), forControlEvents: UIControlEvents.EditingChanged)
         billField.addTarget(self, action: #selector(TipViewController.animateViews), forControlEvents: UIControlEvents.EditingChanged)
-        percentControl.addTarget(self, action: #selector(TipViewController.updateLabels), forControlEvents: UIControlEvents.ValueChanged)
+        percentControl.addTarget(self, action: #selector(TipViewController.setupLabelTexts), forControlEvents: UIControlEvents.ValueChanged)
         
         // Default setting
         user = UserManager()
@@ -67,12 +68,22 @@ class TipViewController: UIViewController{
         updateTheme()
         billField.placeholder = getCurrencySymbol()
         
-        billViewTopConstraint.constant = getTopConstraint((billField.text?.isEmpty)!)
+        billViewTopConstraint.constant = getBillFieldTopConstraint()
 
-        setLabelConstraints()
+        setupLabelsConstraint()
         
+        if let isEmpty = billField.text?.isEmpty  {
+            if isEmpty {
+                labelsView.alpha = 0
+            } else {
+                labelsView.alpha = 1
+            }
+        }
+        
+        
+        billFieldWasEmpty = billField.text?.isEmpty
         //billField.text = "test"
-        //billField.becomeFirstResponder()
+        billField.becomeFirstResponder()
         if let lastBillShouldDisplay = user?.shouldDisplayLastBill() {
             if lastBillShouldDisplay {
                 let lastBill = user?.getLastBill()
@@ -86,17 +97,17 @@ class TipViewController: UIViewController{
     func animateViews() {
         print(#function)
         // research let if
-        if (billField.text!.isEmpty) {
-            billViewTopConstraint.constant = getTopConstraint(false)
-            setLabelConstraints()
+        if (billFieldGetsEmpty()) {
+            billViewTopConstraint.constant = getBillFieldTopConstraint()
+            setupLabelsConstraint()
             self.labelsView.alpha = 1
             UIView.animateWithDuration(0.4, animations: {
                 self.labelsView.alpha = 0
                 self.view.layoutIfNeeded()
             })
-        } else if (!billField.text!.isEmpty){
-            billViewTopConstraint.constant = getTopConstraint(true)
-            setLabelConstraints()
+        } else if (billFieldGetsFilled()){
+            billViewTopConstraint.constant = getBillFieldTopConstraint()
+            setupLabelsConstraint()
             self.labelsView.alpha = 0
             UIView.animateWithDuration(0.4, animations: {
                 self.labelsView.alpha = 1
@@ -105,7 +116,30 @@ class TipViewController: UIViewController{
         }
     }
     
-    private func setLabelConstraints() {
+    func shouldDisplayLabels() {
+        if let isEmpty = billField.text?.isEmpty {
+            if isEmpty {
+                
+            }
+        }
+    }
+    
+    func billFieldGetsEmpty() -> Bool {
+        if (!billFieldWasEmpty! && billField.text!.isEmpty) {
+            billFieldWasEmpty = true
+            return true
+        }
+        return false
+    }
+    
+    func billFieldGetsFilled() -> Bool {
+        if (billFieldWasEmpty! && !billField.text!.isEmpty) {
+            billFieldWasEmpty = false
+            return true
+        }
+        return false
+    }
+    private func setupLabelsConstraint() {
         print(#function)
         if((billField.text?.isEmpty)!) {
             labelsViewTopConstraint.constant = 30
@@ -114,12 +148,14 @@ class TipViewController: UIViewController{
         }
     }
     
-    private func getTopConstraint(isAnimated: Bool) -> CGFloat{
+    private func getBillFieldTopConstraint() -> CGFloat{
         print(#function)
-        if (isAnimated) {
-            return 0
+        if let isEmpty = billField.text?.isEmpty {
+            if isEmpty {
+                return UIScreen.mainScreen().bounds.size.height / 3
+            }
         }
-        return UIScreen.mainScreen().bounds.size.height / 3
+        return 0
     }
     
 
@@ -139,7 +175,7 @@ class TipViewController: UIViewController{
         }
     }
     
-    func updateLabels() {
+    func setupLabelTexts() {
         print(#function)
         let bill = Double(billField.text!) ?? 0
         let percent = getTipPercent()
@@ -175,7 +211,7 @@ class TipViewController: UIViewController{
     
     func redraw() {
         print(#function)
-        updateLabels()
+        setupLabelTexts()
         setupPercentControl()
     }
     
