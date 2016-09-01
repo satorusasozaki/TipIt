@@ -48,6 +48,13 @@ class SettingTableViewController: UITableViewController {
         changerMinCell.percentSlider.addTarget(self, action: #selector(addPercentToUD), forControlEvents: UIControlEvents.TouchUpInside)
     }
     
+    func setupPercentCell(cell: ChangerCell, text: String, index: Int) {
+        let percent = Float((user?.getPercentAtIndex(index))! * 100)
+        cell.percentSlider.setValue(percent, animated: true)
+        cell.percentLabel.text = "\(String(format: "%.0f", percent))%"
+        cell.percentSlider.addTarget(self, action: #selector(addPercentToUD), forControlEvents: UIControlEvents.TouchUpInside)
+    }
+    
     func addPercentToUD(sender: UISlider) {
         let sliderValue = Double(sender.value / 100)
         if (sender == changerMaxCell.percentSlider) {
@@ -60,7 +67,8 @@ class SettingTableViewController: UITableViewController {
             let percent = round(100 * sliderValue) / 100
             user?.setPercentAtIndex(0, value: percent)
         }
-        tipViewController!.redraw()
+        tipViewController!.setupLabelTexts()
+        tipViewController!.setupPercentControl()
     }
     
     @IBAction func onThemeSwitch(sender: UISwitch) {
@@ -68,7 +76,7 @@ class SettingTableViewController: UITableViewController {
         // add method to change color in tip calc
         let switchState = sender.on ? true : false
         user?.setTheme(switchState)
-        tipViewController?.updateTheme()
+        tipViewController?.setupTheme()
     }
     // switch
 }

@@ -28,7 +28,7 @@ class UserManager: NSObject {
         themeKey = "theme"
         lastBillKey = "lastBill"
         lastDateKey = "lastDate"
-        persistentPeriod = 10 * 60
+        persistentPeriod = 100 * 60
         super.init()
     }
     
@@ -93,6 +93,13 @@ class UserManager: NSObject {
             }
         }
         return true
+    }
+    
+    // Get the currency symbol based on location
+    func getCurrencySymbol() -> String {
+        let locale = NSLocale.currentLocale()
+        let currencySymbol = locale.objectForKey(NSLocaleCurrencySymbol)!
+        return currencySymbol as! String
     }
     
 
