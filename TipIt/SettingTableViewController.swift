@@ -23,31 +23,12 @@ class SettingTableViewController: UITableViewController {
         super.viewDidLoad()
         user = UserManager()
         tipViewController = navigationController?.viewControllers[0] as? TipViewController
-        setupPercentCells()
         themeSwitch.setOn((user?.getTheme())!, animated: true)
+        setupPercentCell(changerMaxCell, text: "Max", index: 2)
+        setupPercentCell(changerMidCell, text: "Mid", index: 1)
+        setupPercentCell(changerMinCell, text: "Min", index: 0)
     }
 
-    func setupPercentCells() {
-        
-        let maxPercent = Float((user?.getPercentAtIndex(2))! * 100)
-        changerMaxCell.nameLabel.text = "Max"
-        changerMaxCell.percentSlider.setValue(maxPercent, animated: true)
-        changerMaxCell.percentLabel.text = "\(String(format: "%.0f", maxPercent))%"
-        changerMaxCell.percentSlider.addTarget(self, action: #selector(addPercentToUD), forControlEvents: UIControlEvents.TouchUpInside)
- 
-        let midPercent = Float((user?.getPercentAtIndex(1))! * 100)
-        changerMidCell.nameLabel.text = "Mid"
-        changerMidCell.percentSlider.setValue(midPercent, animated: true)
-        changerMidCell.percentLabel.text = "\(String(format: "%.0f", midPercent))%"
-        changerMidCell.percentSlider.addTarget(self, action: #selector(addPercentToUD), forControlEvents: UIControlEvents.TouchUpInside)
-        
-        let minPercent = Float((user?.getPercentAtIndex(0))! * 100)
-        changerMinCell.nameLabel.text = "Min"
-        changerMinCell.percentSlider.setValue(minPercent, animated: true)
-        changerMinCell.percentLabel.text = "\(String(format: "%.0f", minPercent))%"
-        changerMinCell.percentSlider.addTarget(self, action: #selector(addPercentToUD), forControlEvents: UIControlEvents.TouchUpInside)
-    }
-    
     func setupPercentCell(cell: ChangerCell, text: String, index: Int) {
         let percent = Float((user?.getPercentAtIndex(index))! * 100)
         cell.percentSlider.setValue(percent, animated: true)
@@ -72,11 +53,8 @@ class SettingTableViewController: UITableViewController {
     }
     
     @IBAction func onThemeSwitch(sender: UISwitch) {
-        // get it from nsuserdefault
-        // add method to change color in tip calc
         let switchState = sender.on ? true : false
         user?.setTheme(switchState)
         tipViewController?.setupTheme()
     }
-    // switch
 }
