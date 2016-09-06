@@ -92,10 +92,10 @@ class TipViewController: UIViewController{
         let percent = user?.getPercents()![percentControl.selectedSegmentIndex]
         let total = CalculatorBrain.getTotalAmount(bill, percent: percent!)
         let tip = CalculatorBrain.getTipAmount(bill, percent: percent!)
-        tipLabel.text = (user?.getCurrencySymbol())! + String(format: "%.2f", tip)
-        totalLabel.text = (user?.getCurrencySymbol())! + String(format: "%.2f", total)
-        splitByTwoLabel.text = (user?.getCurrencySymbol())! + String(format: "%.2f", CalculatorBrain.splitBy(total, numOfPeople: 2))
-        splitByThreeLabel.text = (user?.getCurrencySymbol())! + String(format: "%.2f", CalculatorBrain.splitBy(total, numOfPeople: 3))
+        tipLabel.text = (user?.getCurrencySymbol())! + String(format: "%.2f", tip!)
+        totalLabel.text = (user?.getCurrencySymbol())! + String(format: "%.2f", total!)
+        splitByTwoLabel.text = (user?.getCurrencySymbol())! + String(format: "%.2f", CalculatorBrain.splitBy(total!, numOfPeople: 2)!)
+        splitByThreeLabel.text = (user?.getCurrencySymbol())! + String(format: "%.2f", CalculatorBrain.splitBy(total!, numOfPeople: 3)!)
     }
     
     // MARK: Constraint

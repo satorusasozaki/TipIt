@@ -47,22 +47,19 @@ class UserManager: NSObject {
         return nil
     }
     
-    func getTheme() -> Bool {
-        return ud?.objectForKey(themeKey!) as! Bool
+    func getTheme() -> Bool? {
+        return ud?.objectForKey(themeKey!) as? Bool
     }
     
-    // Call this method after making sure if the last bill should be displayed in bill field callind shouldDisplayLastbill
-    func getLastBillAndDate() -> (bill: Double?, date: NSDate?)? {
-        let lastBill = getLastBill()
-        let lastDate = ud?.objectForKey(lastDateKey!) as! NSDate
-        return (lastBill, lastDate)
+    func getLastDate() -> NSDate? {
+        return ud?.objectForKey(lastDateKey!) as? NSDate
     }
     
-    func getLastBill() -> Double {
-        return ud?.objectForKey(lastBillKey!) as! Double
+    func getLastBill() -> Double? {
+        return ud?.objectForKey(lastBillKey!) as? Double
     }
     
-    func setPercentAtIndex(index: Int, value: Double) -> Void {
+    func setPercentAtIndex(index: Int, value: Double) {
         if (index >= 0 && index < 3) {
             if var percents = getPercents() {
                 percents[index] = value
@@ -86,8 +83,7 @@ class UserManager: NSObject {
     }
     
     func shouldDisplayLastBill() -> Bool {
-        let last = getLastBillAndDate()
-        if let lastDate = last!.date {
+        if let lastDate = getLastDate() {
             //http://stackoverflow.com/questions/11121459/how-to-convert-nstimeinterval-to-int
             let interval = NSInteger(NSDate().timeIntervalSinceDate(lastDate))
             if (interval < persistentPeriod) {
@@ -96,7 +92,7 @@ class UserManager: NSObject {
                 return false
             }
         }
-        return true
+        return false
     }
     
     // Get the currency symbol based on location
