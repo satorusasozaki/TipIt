@@ -74,11 +74,7 @@ class TipViewController: UIViewController{
     // Get theme state from user and set it
     func setupTheme() {
         if let themeState = user?.theme {
-            if themeState {
-                view.backgroundColor = UIColor.blackColor()
-            } else {
-                view.backgroundColor = UIColor.whiteColor()
-            }
+            view.backgroundColor = themeState ? UIColor.blackColor() : UIColor.whiteColor()
         }
     }
     
@@ -97,20 +93,12 @@ class TipViewController: UIViewController{
     // MARK: Constraint
     // Set labels top constraint depending on if bill is empty or not
     private func setupLabelsTopConstraint() {
-        if ((billField.text?.isEmpty)!) {
-            labelsViewTopConstraint.constant = 30
-        } else {
-            labelsViewTopConstraint.constant = 100
-        }
+        labelsViewTopConstraint.constant = (billField.text?.isEmpty)! ? 30 : 100
     }
     
     // Set billField top constraint depending on if bill is empty or not
     func setupBillFieldTopConstraint() {
-        if ((billField.text?.isEmpty)!) {
-            billViewTopConstraint.constant = UIScreen.mainScreen().bounds.size.height / 3
-        } else {
-            billViewTopConstraint.constant = 0
-        }
+        billViewTopConstraint.constant = (billField.text?.isEmpty)! ? UIScreen.mainScreen().bounds.size.height / 3 : 0
     }
     
     // MARK: Animation
