@@ -34,8 +34,6 @@ class TipViewController: UIViewController{
         billField.text = "123"
         // Default setting
         user = UserManager()
-        user?.percents = [0.1, 0.15, 0.20]
-        user?.theme = false
         setupPercentControl()
         setupTheme()
         billField.placeholder = user?.currencySymbol
@@ -66,7 +64,7 @@ class TipViewController: UIViewController{
     // MARK: Setups
     // Configure percent control with values from user default
     func setupPercentControl() {
-        let percents = user?.percents
+        let percents = user?.percents!
         for index in 0..<percents!.count {
             let percent = String(format: "%.0f", percents![index]*100)
             percentControl.setTitle("\(percent)%", forSegmentAtIndex: index)

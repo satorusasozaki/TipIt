@@ -13,33 +13,36 @@ import UIKit
 
 class UserManager: NSObject {
     
+    //var ud: NSUserDefaults?
+    static let persistentPeriod = 100 * 60
+    static let percentsKey = "percents"
+    static let themeKey = "theme"
+    static let lastBillKey = "lastBill"
+    static let lastDateKey = "lastDate"
     var ud: NSUserDefaults?
-    var percentsKey: String?
-    var themeKey: String?
-    var lastBillKey: String?
-    var lastDateKey: String?
-    
-    var persistentPeriod: Int?
     
     override init() {
         ud = NSUserDefaults.standardUserDefaults()
-        percentsKey = "percents"
-        themeKey = "theme"
-        lastBillKey = "lastBill"
-        lastDateKey = "lastDate"
-        persistentPeriod = 100 * 60
         super.init()
     }
     
     var percents: [Double]? {
         get {
-            return ud?.objectForKey(percentsKey!) as? [Double]
+            if let percents = ud?.objectForKey(UserManager.percentsKey) as? [Double] {
+                return percents
+            } else {
+                // Initialize if the value is nil
+                let percents: [Double] = [0.1, 0.15, 0.2]
+                ud?.setObject(percents, forKey: UserManager.percentsKey)
+                return percents
+            }
         }
         set {
             newValue
         }
     }
     
+    // subscript cannot be marked static so instance needed, otherwise this could be used without instanciation
     subscript (i: Int) -> Double? {
         get {
             return i >= 0 && i < 2 ? percents![i] : nil
@@ -47,35 +50,44 @@ class UserManager: NSObject {
         set {
             if i >= 0 && i < 2 {
                 percents![i] = newValue!
-                ud?.setObject(percents, forKey: percentsKey!)
+                ud?.setObject(percents, forKey: UserManager.percentsKey)
             }
         }
     }
     
     var theme: Bool? {
         get {
-            return ud?.objectForKey(themeKey!) as? Bool
+            if let theme = ud?.objectForKey(UserManager.themeKey) as? Bool {
+                return theme
+            } else {
+                // Initialize if the value is nil
+                let theme = false
+                ud?.setObject(theme, forKey: UserManager.themeKey)
+                return theme
+            }
         }
         set {
-            ud?.setObject(newValue, forKey: themeKey!)
+            ud?.setObject(newValue, forKey: UserManager.themeKey)
         }
     }
     
     var lastDate: NSDate? {
         get {
-            return ud?.objectForKey(lastDateKey!) as? NSDate
+            // Can return nil. No need to initialize
+            return ud?.objectForKey(UserManager.lastDateKey) as? NSDate
         }
         set {
-            ud?.setObject(NSDate(), forKey: lastDateKey!)
+            ud?.setObject(NSDate(), forKey: UserManager.lastDateKey)
         }
     }
 
     var lastBill: Double? {
         get {
-            return ud?.objectForKey(lastBillKey!) as? Double
+            // Can return nil. No need to initialize
+            return ud?.objectForKey(UserManager.lastBillKey) as? Double
         }
         set {
-            ud?.setObject(newValue, forKey: lastBillKey!)
+            ud?.setObject(newValue, forKey: UserManager.lastBillKey)
         }
     }
     
@@ -92,7 +104,7 @@ class UserManager: NSObject {
             if let lastDate = lastDate {
                 //http://stackoverflow.com/questions/11121459/how-to-convert-nstimeinterval-to-int
                 let interval = NSInteger(NSDate().timeIntervalSinceDate(lastDate))
-                if (interval < persistentPeriod) {
+                if (interval < UserManager.persistentPeriod) {
                     return true
                 } else {
                     return false
