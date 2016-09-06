@@ -32,18 +32,19 @@ class UserManager: NSObject {
         super.init()
     }
     
-    func getPercents() -> [Double] {
-        return ud?.objectForKey(percentsKey!) as! [Double]
+    func getPercents() -> [Double]? {
+        return ud?.objectForKey(percentsKey!) as? [Double]
     }
     
-    func getPercentAtIndex(index: Int) -> Double {
-        let percents = getPercents()
+    func getPercentAtIndex(index: Int) -> Double? {
         if (index >= 0 && index < 3) {
-            return percents[index]
-        } else {
-            print("Index is out of range\n")
+            if let percents = getPercents() {
+                return percents[index]
+            } else {
+                return nil
+            }
         }
-        return percents[0]
+        return nil
     }
     
     func getTheme() -> Bool {
@@ -63,12 +64,15 @@ class UserManager: NSObject {
     
     func setPercentAtIndex(index: Int, value: Double) -> Void {
         if (index >= 0 && index < 3) {
-            var percents = getPercents()
-            percents[index] = value
-            ud?.setObject(percents, forKey: percentsKey!)
-        } else {
-            print("Index is out of range\n")
-        }
+            if var percents = getPercents() {
+                percents[index] = value
+                ud?.setObject(percents, forKey: percentsKey!)
+            } else {
+                var percents:[Double] = [0, 0, 0]
+                percents[index] = value
+                ud?.setObject(percents, forKey: percentsKey!)
+            }
+        }  
     }
     
     func setTheme(dark: Bool) {

@@ -89,7 +89,7 @@ class TipViewController: UIViewController{
     // Set text in all the labels
     func setupLabelTexts() {
         let bill = Double(billField.text!) ?? 0
-        let percent = user?.getPercents()[percentControl.selectedSegmentIndex]
+        let percent = user?.getPercents()![percentControl.selectedSegmentIndex]
         let total = CalculatorBrain.getTotalAmount(bill, percent: percent!)
         let tip = CalculatorBrain.getTipAmount(bill, percent: percent!)
         tipLabel.text = (user?.getCurrencySymbol())! + String(format: "%.2f", tip)
