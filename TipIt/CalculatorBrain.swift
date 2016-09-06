@@ -9,6 +9,7 @@
 import UIKit
 
 class CalculatorBrain: NSObject {
+    
     class func getTipAmount(bill: Double, percent: Double) -> Double? {
         return bill * percent
     }

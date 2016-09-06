@@ -121,7 +121,7 @@ class TipViewController: UIViewController{
     // Animate views if needed. Called every time bill field is changed
     func animateViews() {
         // research let if
-        if (billFieldGetsEmpty()) {
+        if (billFieldGetsEmpty()!) {
             setupBillFieldTopConstraint()
             setupLabelsTopConstraint()
             self.labelsView.alpha = 1
@@ -129,7 +129,7 @@ class TipViewController: UIViewController{
                 self.labelsView.alpha = 0
                 self.view.layoutIfNeeded()
             })
-        } else if (billFieldGetsFilled()){
+        } else if (billFieldGetsFilled()!){
             setupBillFieldTopConstraint()
             setupLabelsTopConstraint()
             self.labelsView.alpha = 0
@@ -142,7 +142,7 @@ class TipViewController: UIViewController{
     
     // MARK: Logic
     // When bill gets empty, returns true
-    func billFieldGetsEmpty() -> Bool {
+    func billFieldGetsEmpty() -> Bool! {
         if (!billFieldWasEmpty! && billField.text!.isEmpty) {
             billFieldWasEmpty = true
             return true
@@ -151,7 +151,7 @@ class TipViewController: UIViewController{
     }
     
     // When bill gets filled, returns true
-    func billFieldGetsFilled() -> Bool {
+    func billFieldGetsFilled() -> Bool! {
         if (billFieldWasEmpty! && !billField.text!.isEmpty) {
             billFieldWasEmpty = false
             return true
