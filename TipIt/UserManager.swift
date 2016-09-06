@@ -6,15 +6,14 @@
 //  Copyright © 2016 Satoru Sasozaki. All rights reserved.
 //
 
+// Make functions computed variable to make it simple
+// Functions without parameter can likely be a computed variable
+
 import UIKit
 
 class UserManager: NSObject {
     
-    
-    // get theme -> bool
-    // get percents -> [Double]
     var ud: NSUserDefaults?
-    
     var percentsKey: String?
     var themeKey: String?
     var lastBillKey: String?
@@ -32,75 +31,74 @@ class UserManager: NSObject {
         super.init()
     }
     
-    func getPercents() -> [Double]? {
-        return ud?.objectForKey(percentsKey!) as? [Double]
-    }
-    
-    func getPercentAtIndex(index: Int) -> Double? {
-        if (index >= 0 && index < 3) {
-            if let percents = getPercents() {
-                return percents[index]
-            } else {
-                return nil
-            }
+    var percents: [Double]? {
+        get {
+            return ud?.objectForKey(percentsKey!) as? [Double]
         }
-        return nil
+        set {
+            newValue
+        }
     }
     
-    func getTheme() -> Bool? {
-        return ud?.objectForKey(themeKey!) as? Bool
-    }
-    
-    func getLastDate() -> NSDate? {
-        return ud?.objectForKey(lastDateKey!) as? NSDate
-    }
-    
-    func getLastBill() -> Double? {
-        return ud?.objectForKey(lastBillKey!) as? Double
-    }
-    
-    func setPercentAtIndex(index: Int, value: Double) {
-        if (index >= 0 && index < 3) {
-            if var percents = getPercents() {
-                percents[index] = value
-                ud?.setObject(percents, forKey: percentsKey!)
-            } else {
-                var percents:[Double] = [0, 0, 0]
-                percents[index] = value
+    subscript (i: Int) -> Double? {
+        get {
+            return i >= 0 && i < 2 ? percents![i] : nil
+        }
+        set {
+            if i >= 0 && i < 2 {
+                percents![i] = newValue!
                 ud?.setObject(percents, forKey: percentsKey!)
             }
-        }  
-    }
-    
-    func setTheme(dark: Bool) {
-        ud?.setObject(dark, forKey: themeKey!)
-    }
-    
-    func setLastBill(bill: Double) {
-        ud?.setObject(bill, forKey: lastBillKey!)
-        ud?.setObject(NSDate(), forKey: lastDateKey!)
-        print("\(bill) and \(NSDate()) is set in \(#function)")
-    }
-    
-    func shouldDisplayLastBill() -> Bool {
-        if let lastDate = getLastDate() {
-            //http://stackoverflow.com/questions/11121459/how-to-convert-nstimeinterval-to-int
-            let interval = NSInteger(NSDate().timeIntervalSinceDate(lastDate))
-            if (interval < persistentPeriod) {
-                return true
-            } else {
-                return false
-            }
         }
-        return false
     }
     
-    // Get the currency symbol based on location
-    func getCurrencySymbol() -> String {
-        let locale = NSLocale.currentLocale()
-        let currencySymbol = locale.objectForKey(NSLocaleCurrencySymbol)!
-        return currencySymbol as! String
+    var theme: Bool? {
+        get {
+            return ud?.objectForKey(themeKey!) as? Bool
+        }
+        set {
+            ud?.setObject(newValue, forKey: themeKey!)
+        }
     }
     
+    var lastDate: NSDate? {
+        get {
+            return ud?.objectForKey(lastDateKey!) as? NSDate
+        }
+        set {
+            ud?.setObject(NSDate(), forKey: lastDateKey!)
+        }
+    }
 
+    var lastBill: Double? {
+        get {
+            return ud?.objectForKey(lastBillKey!) as? Double
+        }
+        set {
+            ud?.setObject(newValue, forKey: lastBillKey!)
+        }
+    }
+    
+    var currencySymbol: String? {
+        get {
+            let locale = NSLocale.currentLocale()
+            let currencySymbol = locale.objectForKey(NSLocaleCurrencySymbol)!
+            return currencySymbol as? String
+        }
+    }
+    
+    var shouldDisplayLastBill: Bool? {
+        get {
+            if let lastDate = lastDate {
+                //http://stackoverflow.com/questions/11121459/how-to-convert-nstimeinterval-to-int
+                let interval = NSInteger(NSDate().timeIntervalSinceDate(lastDate))
+                if (interval < persistentPeriod) {
+                    return true
+                } else {
+                    return false
+                }
+            }
+            return false
+        }
+    }
 }

@@ -34,13 +34,11 @@ class TipViewController: UIViewController{
         billField.text = "123"
         // Default setting
         user = UserManager()
-        user?.setPercentAtIndex(0, value: 0.1)
-        user?.setPercentAtIndex(1, value: 0.15)
-        user?.setPercentAtIndex(2, value: 0.29)
-        user?.setTheme(false)
+        user?.percents = [0.1, 0.15, 0.20]
+        user?.theme = false
         setupPercentControl()
         setupTheme()
-        billField.placeholder = user?.getCurrencySymbol()
+        billField.placeholder = user?.currencySymbol
         setupLabelTexts()
         setupBillFieldTopConstraint()
         setupLabelsTopConstraint()
@@ -68,7 +66,7 @@ class TipViewController: UIViewController{
     // MARK: Setups
     // Configure percent control with values from user default
     func setupPercentControl() {
-        let percents = user?.getPercents()
+        let percents = user?.percents
         for index in 0..<percents!.count {
             let percent = String(format: "%.0f", percents![index]*100)
             percentControl.setTitle("\(percent)%", forSegmentAtIndex: index)
@@ -77,7 +75,7 @@ class TipViewController: UIViewController{
     
     // Get theme state from user and set it
     func setupTheme() {
-        if let themeState = user?.getTheme() {
+        if let themeState = user?.theme {
             if themeState {
                 view.backgroundColor = UIColor.blackColor()
             } else {
@@ -89,13 +87,13 @@ class TipViewController: UIViewController{
     // Set text in all the labels
     func setupLabelTexts() {
         let bill = Double(billField.text!) ?? 0
-        let percent = user?.getPercents()![percentControl.selectedSegmentIndex]
+        let percent = user?.percents![percentControl.selectedSegmentIndex]
         let total = CalculatorBrain.getTotalAmount(bill, percent: percent!)
         let tip = CalculatorBrain.getTipAmount(bill, percent: percent!)
-        tipLabel.text = (user?.getCurrencySymbol())! + String(format: "%.2f", tip!)
-        totalLabel.text = (user?.getCurrencySymbol())! + String(format: "%.2f", total!)
-        splitByTwoLabel.text = (user?.getCurrencySymbol())! + String(format: "%.2f", CalculatorBrain.splitBy(total!, numOfPeople: 2)!)
-        splitByThreeLabel.text = (user?.getCurrencySymbol())! + String(format: "%.2f", CalculatorBrain.splitBy(total!, numOfPeople: 3)!)
+        tipLabel.text = (user?.currencySymbol)! + String(format: "%.2f", tip!)
+        totalLabel.text = (user?.currencySymbol)! + String(format: "%.2f", total!)
+        splitByTwoLabel.text = (user?.currencySymbol)! + String(format: "%.2f", CalculatorBrain.splitBy(total!, numOfPeople: 2)!)
+        splitByThreeLabel.text = (user?.currencySymbol)! + String(format: "%.2f", CalculatorBrain.splitBy(total!, numOfPeople: 3)!)
     }
     
     // MARK: Constraint
@@ -162,8 +160,7 @@ class TipViewController: UIViewController{
     // MARK: General
     // Save bill text to NSUserDefault when the editing is done
     func saveBill() {
-        let bill = Double(billField.text!)
-        user?.setLastBill(bill!)
+        user?.lastBill = Double(billField.text!)
     }
     
     // To hide keyboard

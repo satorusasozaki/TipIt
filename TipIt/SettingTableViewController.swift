@@ -23,14 +23,14 @@ class SettingTableViewController: UITableViewController {
         super.viewDidLoad()
         user = UserManager()
         tipViewController = navigationController?.viewControllers[0] as? TipViewController
-        themeSwitch.setOn((user?.getTheme())!, animated: true)
+        themeSwitch.setOn((user?.theme)!, animated: true)
         setupPercentCell(changerMaxCell, text: "Max", index: 2)
         setupPercentCell(changerMidCell, text: "Mid", index: 1)
         setupPercentCell(changerMinCell, text: "Min", index: 0)
     }
 
     func setupPercentCell(cell: ChangerCell, text: String, index: Int) {
-        let percent = Float((user?.getPercentAtIndex(index))! * 100)
+        let percent = Float((user?.percents![index])! * 100)
         cell.percentSlider.setValue(percent, animated: true)
         cell.percentLabel.text = "\(String(format: "%.0f", percent))%"
         cell.percentSlider.addTarget(self, action: #selector(addPercentToUD), forControlEvents: UIControlEvents.TouchUpInside)
@@ -38,15 +38,14 @@ class SettingTableViewController: UITableViewController {
     
     func addPercentToUD(sender: UISlider) {
         let sliderValue = Double(sender.value / 100)
+        let percent = round(100 * sliderValue) / 100
+
         if (sender == changerMaxCell.percentSlider) {
-            let percent = round(100 * sliderValue) / 100
-            user?.setPercentAtIndex(2, value: percent)
+            user?.percents![2] = percent
         } else if (sender == changerMidCell.percentSlider) {
-            let percent = round(100 * sliderValue) / 100
-            user?.setPercentAtIndex(1, value: percent)
+            user?.percents![1] = percent
         } else {
-            let percent = round(100 * sliderValue) / 100
-            user?.setPercentAtIndex(0, value: percent)
+            user?.percents![0] = percent
         }
         tipViewController!.setupLabelTexts()
         tipViewController!.setupPercentControl()
@@ -54,7 +53,7 @@ class SettingTableViewController: UITableViewController {
     
     @IBAction func onThemeSwitch(sender: UISwitch) {
         let switchState = sender.on ? true : false
-        user?.setTheme(switchState)
+        user?.theme = switchState
         tipViewController?.setupTheme()
     }
 }
