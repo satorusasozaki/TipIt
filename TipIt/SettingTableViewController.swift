@@ -32,6 +32,7 @@ class SettingTableViewController: UITableViewController {
     func setupPercentCell(cell: ChangerCell, text: String, index: Int) {
         let percent = Float((user?.percents![index])! * 100)
         cell.percentSlider.setValue(percent, animated: true)
+        cell.nameLabel.text = text
         cell.percentLabel.text = "\(String(format: "%.0f", percent))%"
         cell.percentSlider.addTarget(self, action: #selector(addPercentToUD), forControlEvents: UIControlEvents.TouchUpInside)
     }
