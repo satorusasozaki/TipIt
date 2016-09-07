@@ -21,27 +21,12 @@ class UserManager: NSObject {
     static let lastDateKey = "lastDate"
     var ud: NSUserDefaults?
     var percents: Percents?
+    
     override init() {
         ud = NSUserDefaults.standardUserDefaults()
         percents = Percents(userDefault: ud!)
         super.init()
     }
-    
-//    var percents: [Double]? {
-//        get {
-//            if let percents = ud?.objectForKey(UserManager.percentsKey) as? [Double] {
-//                return percents
-//            } else {
-//                // Initialize if the value is nil
-//                let percents: [Double] = [0.1, 0.15, 0.2]
-//                ud?.setObject(percents, forKey: UserManager.percentsKey)
-//                return percents
-//            }
-//        }
-//        set {
-//            ud?.setObject(newValue, forKey: UserManager.percentsKey)
-//        }
-//    }
     
     struct Percents {
         var defaults: NSUserDefaults?

@@ -56,10 +56,10 @@ class TipViewController: UIViewController{
         
     }
     
-    // Calling updateTheme everytime when viewWillAppear gets called is inefficient
+    // I thought calling updateTheme everytime when viewWillAppear gets called is inefficient
+    // updateTheme method is called when the theme switch has been changed in setting view controleller
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-
     }
     
     // MARK: Setups

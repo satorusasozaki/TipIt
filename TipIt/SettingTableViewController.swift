@@ -38,17 +38,14 @@ class SettingTableViewController: UITableViewController {
     }
     
     func addPercentToUD(sender: UISlider) {
-        let sliderValue = Double(sender.value / 100)
-        let percent = round(100 * sliderValue) / 100
-        var percents = user?.percents
+        let percent = round(100 * Double(sender.value / 100)) / 100
         if (sender == changerMaxCell.percentSlider) {
-            percents![2] = percent
+            user?.percents![2] = percent
         } else if (sender == changerMidCell.percentSlider) {
-            percents![1] = percent
+            user?.percents![1] = percent
         } else {
-            percents![0] = percent
+            user?.percents![0] = percent
         }
-        user?.percents = percents
         tipViewController!.setupLabelTexts()
         tipViewController!.setupPercentControl()
     }
