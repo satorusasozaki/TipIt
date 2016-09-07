@@ -26,17 +26,19 @@ class TipViewController: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        user = UserManager()
 
         billField.addTarget(self, action: #selector(TipViewController.setupLabelTexts), forControlEvents: UIControlEvents.EditingChanged)
         billField.addTarget(self, action: #selector(TipViewController.animateViews), forControlEvents: UIControlEvents.EditingChanged)
         billField.addTarget(self, action: #selector(TipViewController.saveBill), forControlEvents: UIControlEvents.EditingDidEnd)
         percentControl.addTarget(self, action: #selector(TipViewController.setupLabelTexts), forControlEvents: UIControlEvents.ValueChanged)
         
-        billField.text = "123"
-        billField.performSelector(#selector(UIResponder.becomeFirstResponder), withObject: nil, afterDelay: 0)
+        // billField.becomeFirstResponder() won't work
+        // billField text disappears when the keyboard gets toggle as the first responder
+        billField.performSelector(#selector(UIResponder.becomeFirstResponder), withObject: nil, afterDelay: 0.5)
+        billField.text = (user?.shouldDisplayLastBill)! ? String((user?.lastBill)!) : ""
 
         // Default setting
-        user = UserManager()
         setupPercentControl()
         setupTheme()
         billField.placeholder = user?.currencySymbol
@@ -155,6 +157,7 @@ class TipViewController: UIViewController{
     // Save bill text to NSUserDefault when the editing is done
     func saveBill() {
         user?.lastBill = Double(billField.text!)
+        user?.lastDate = NSDate()
     }
     
     // To hide keyboard

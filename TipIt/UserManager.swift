@@ -86,7 +86,7 @@ class UserManager: NSObject {
             return ud?.objectForKey(UserManager.lastDateKey) as? NSDate
         }
         set {
-            ud?.setObject(NSDate(), forKey: UserManager.lastDateKey)
+            ud?.setObject(newValue, forKey: UserManager.lastDateKey)
         }
     }
 
