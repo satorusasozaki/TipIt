@@ -26,16 +26,18 @@ class TipViewController: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        user = UserManager()
-
+        
+        // Add target
         billField.addTarget(self, action: #selector(TipViewController.setupLabelTexts), forControlEvents: UIControlEvents.EditingChanged)
         billField.addTarget(self, action: #selector(TipViewController.animateViews), forControlEvents: UIControlEvents.EditingChanged)
         billField.addTarget(self, action: #selector(TipViewController.saveBill), forControlEvents: UIControlEvents.EditingDidEnd)
         percentControl.addTarget(self, action: #selector(TipViewController.setupLabelTexts), forControlEvents: UIControlEvents.ValueChanged)
-        
+        // Make bill field the first responder
+        billField.performSelector(#selector(UIResponder.becomeFirstResponder), withObject: nil, afterDelay: 0.5)
+
+        user = UserManager()
         // billField.becomeFirstResponder() won't work
         // billField text disappears when the keyboard gets toggle as the first responder
-        billField.performSelector(#selector(UIResponder.becomeFirstResponder), withObject: nil, afterDelay: 0.5)
         billField.text = (user?.shouldDisplayLastBill)! ? String((user?.lastBill)!) : ""
 
         // Default setting
@@ -53,11 +55,7 @@ class TipViewController: UIViewController{
                 labelsView.alpha = 1
             }
         }
-        
-        //billField.becomeFirstResponder()
-        
         billFieldWasEmpty = billField.text?.isEmpty
-        
     }
     
     // I thought calling updateTheme everytime when viewWillAppear gets called is inefficient
