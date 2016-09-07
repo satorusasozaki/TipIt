@@ -38,20 +38,7 @@ class UserManager: NSObject {
             }
         }
         set {
-            newValue
-        }
-    }
-    
-    // subscript cannot be marked static so instance needed, otherwise this could be used without instanciation
-    subscript (i: Int) -> Double? {
-        get {
-            return i >= 0 && i < 2 ? percents![i] : nil
-        }
-        set {
-            if i >= 0 && i < 2 {
-                percents![i] = newValue!
-                ud?.setObject(percents, forKey: UserManager.percentsKey)
-            }
+            ud?.setObject(newValue, forKey: UserManager.percentsKey)
         }
     }
     

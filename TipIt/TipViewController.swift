@@ -20,6 +20,7 @@ class TipViewController: UIViewController{
     @IBOutlet weak var labelsView: UIView!
     @IBOutlet weak var labelsViewTopConstraint: NSLayoutConstraint!
     
+    
     var user: UserManager?
     var billFieldWasEmpty: Bool?
     
