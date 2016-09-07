@@ -26,13 +26,15 @@ class TipViewController: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         billField.addTarget(self, action: #selector(TipViewController.setupLabelTexts), forControlEvents: UIControlEvents.EditingChanged)
         billField.addTarget(self, action: #selector(TipViewController.animateViews), forControlEvents: UIControlEvents.EditingChanged)
         billField.addTarget(self, action: #selector(TipViewController.saveBill), forControlEvents: UIControlEvents.EditingDidEnd)
         percentControl.addTarget(self, action: #selector(TipViewController.setupLabelTexts), forControlEvents: UIControlEvents.ValueChanged)
         
         billField.text = "123"
+        billField.performSelector(#selector(UIResponder.becomeFirstResponder), withObject: nil, afterDelay: 0)
+
         // Default setting
         user = UserManager()
         setupPercentControl()
@@ -60,6 +62,11 @@ class TipViewController: UIViewController{
     // updateTheme method is called when the theme switch has been changed in setting view controleller
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
     }
     
     // MARK: Setups
