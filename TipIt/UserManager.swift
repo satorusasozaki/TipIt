@@ -20,25 +20,62 @@ class UserManager: NSObject {
     static let lastBillKey = "lastBill"
     static let lastDateKey = "lastDate"
     var ud: NSUserDefaults?
-    
+    var percents: Percents?
     override init() {
         ud = NSUserDefaults.standardUserDefaults()
+        percents = Percents(userDefault: ud!)
         super.init()
     }
     
-    var percents: [Double]? {
-        get {
-            if let percents = ud?.objectForKey(UserManager.percentsKey) as? [Double] {
-                return percents
-            } else {
-                // Initialize if the value is nil
-                let percents: [Double] = [0.1, 0.15, 0.2]
-                ud?.setObject(percents, forKey: UserManager.percentsKey)
-                return percents
-            }
+//    var percents: [Double]? {
+//        get {
+//            if let percents = ud?.objectForKey(UserManager.percentsKey) as? [Double] {
+//                return percents
+//            } else {
+//                // Initialize if the value is nil
+//                let percents: [Double] = [0.1, 0.15, 0.2]
+//                ud?.setObject(percents, forKey: UserManager.percentsKey)
+//                return percents
+//            }
+//        }
+//        set {
+//            ud?.setObject(newValue, forKey: UserManager.percentsKey)
+//        }
+//    }
+    
+    struct Percents {
+        var defaults: NSUserDefaults?
+        let count = 3
+        init(userDefault: NSUserDefaults) {
+            defaults = userDefault
         }
-        set {
-            ud?.setObject(newValue, forKey: UserManager.percentsKey)
+        subscript (i: Int) -> Double {
+            get {
+                if i >= 0 && i <= 2 {
+                    if let percents = defaults?.objectForKey(UserManager.percentsKey) as? [Double] {
+                        return percents[i]
+                    } else {
+                        // Initialize if the value is nil
+                        let percents: [Double] = [0.1, 0.15, 0.2]
+                        defaults?.setObject(percents, forKey: UserManager.percentsKey)
+                        return percents[i]
+                    }
+                }
+                return 0
+            }
+            set {
+                if i >= 0 && i <= 2 {
+                    if var percents = defaults?.objectForKey(UserManager.percentsKey) as? [Double] {
+                        percents[i] = newValue
+                        defaults!.setObject(percents, forKey: UserManager.percentsKey)
+                    } else {
+                        // Initialize if the value is nil
+                        var percents: [Double] = [0.1, 0.15, 0.2]
+                        percents[i] = newValue
+                        defaults?.setObject(percents, forKey: UserManager.percentsKey)
+                    }
+                }
+            }
         }
     }
     
