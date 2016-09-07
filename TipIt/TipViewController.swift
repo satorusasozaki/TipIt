@@ -38,7 +38,10 @@ class TipViewController: UIViewController{
         user = UserManager()
         // billField.becomeFirstResponder() won't work
         // billField text disappears when the keyboard gets toggle as the first responder
-        billField.text = (user?.shouldDisplayLastBill)! ? String((user?.lastBill)!) : ""
+        if let lastBill = user?.lastBill {
+            billField.text = (user?.shouldDisplayLastBill)! ? String(lastBill) : ""
+        }
+        //billField.text = (user?.shouldDisplayLastBill)! ? String((user?.lastBill)!) : ""
 
         // Default setting
         setupPercentControl()
@@ -101,7 +104,7 @@ class TipViewController: UIViewController{
     // MARK: Constraint
     // Set labels top constraint depending on if bill is empty or not
     private func setupLabelsTopConstraint() {
-        labelsViewTopConstraint.constant = (billField.text?.isEmpty)! ? 30 : 100
+        //labelsViewTopConstraint.constant = (billField.text?.isEmpty)! ? 30 : 30
     }
     
     // Set billField top constraint depending on if bill is empty or not

@@ -82,7 +82,6 @@ class UserManager: NSObject {
     
     var lastDate: NSDate? {
         get {
-            // Can return nil. No need to initialize
             return ud?.objectForKey(UserManager.lastDateKey) as? NSDate
         }
         set {
@@ -92,7 +91,6 @@ class UserManager: NSObject {
 
     var lastBill: Double? {
         get {
-            // Can return nil. No need to initialize
             return ud?.objectForKey(UserManager.lastBillKey) as? Double
         }
         set {
