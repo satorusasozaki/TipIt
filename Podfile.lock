@@ -1,12 +1,15 @@
 PODS:
+  - Font-Awesome-Swift (1.4.8)
   - UIColor_Hex_Swift (2.1)
 
 DEPENDENCIES:
+  - Font-Awesome-Swift (~> 1.4.8)
   - UIColor_Hex_Swift (~> 2.1)
 
 SPEC CHECKSUMS:
+  Font-Awesome-Swift: 354c9440b0e4d692e31171c84091f3510e8f9468
   UIColor_Hex_Swift: e91dc51f6bf252ec7bf74c8704ceedeeb7640c1c
 
-PODFILE CHECKSUM: 73b69e5d7fdb293da0d3049a7817462be8b11398
+PODFILE CHECKSUM: c062785825a584604b466ecf6160e4d538e6fa57
 
 COCOAPODS: 1.0.1

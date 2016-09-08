@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Font_Awesome_Swift
 
 class TipViewController: UIViewController{
 
@@ -32,6 +33,7 @@ class TipViewController: UIViewController{
     var billFieldWasEmpty: Bool?
     var color: ColorManager?
     
+    @IBOutlet weak var testLabel: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -69,6 +71,9 @@ class TipViewController: UIViewController{
         
         color = ColorManager(status: (user?.theme)!)
         setupTheme()
+        
+        // FontAwesome
+        testLabel.FAIcon = FAType.FAUser
     }
     
     // I thought calling updateTheme everytime when viewWillAppear gets called is inefficient
