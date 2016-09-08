@@ -485,7 +485,7 @@
                                             <outlet property="percentSlider" destination="mKz-6Z-O20" id="t8y-Xq-fvz"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="changerCell" id="eBu-AH-TDD" customClass="ChangerCell" customModule="TipIt" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="changerCell" id="eBu-AH-TDD" customClass="ChangerCell" customModule="TipIt" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="93.5" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="eBu-AH-TDD" id="DdO-nc-8OV">
@@ -519,7 +519,7 @@
                                             <outlet property="percentSlider" destination="6Kr-gc-o44" id="LBh-Ck-NXD"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="changerCell" id="KCR-BZ-67V" customClass="ChangerCell" customModule="TipIt" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="changerCell" id="KCR-BZ-67V" customClass="ChangerCell" customModule="TipIt" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="137.5" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KCR-BZ-67V" id="rkn-Bn-mfc">
