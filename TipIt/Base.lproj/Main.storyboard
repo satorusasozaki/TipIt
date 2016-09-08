@@ -199,10 +199,15 @@
                         <outlet property="labelsViewTopConstraint" destination="V80-Wn-Uki" id="NPE-Ei-Cwt"/>
                         <outlet property="percentControl" destination="Q3o-Ih-8Jg" id="9F4-B5-Kzv"/>
                         <outlet property="splitByFourLabel" destination="zxH-l1-HZR" id="xEJ-2I-zxv"/>
+                        <outlet property="splitByFourView" destination="RDv-zP-kdp" id="lEz-qA-0gN"/>
                         <outlet property="splitByThreeLabel" destination="AcB-6C-N8H" id="G9K-8F-Cfa"/>
+                        <outlet property="splitByThreeView" destination="PGy-eh-UWD" id="5Cv-Ou-2Qe"/>
                         <outlet property="splitByTwoLabel" destination="FQ1-M7-051" id="EV8-T0-DU7"/>
+                        <outlet property="splitByTwoView" destination="oL6-NM-hYN" id="zzu-q0-C6L"/>
                         <outlet property="tipLabel" destination="K0m-HB-De7" id="w5R-Kb-Lra"/>
+                        <outlet property="tipView" destination="duW-Pp-HQo" id="tth-0m-Tbs"/>
                         <outlet property="totalLabel" destination="2gN-UT-vV5" id="237-zc-lAr"/>
+                        <outlet property="totalView" destination="BUO-5a-gws" id="SSf-UX-1xM"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

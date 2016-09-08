@@ -21,9 +21,16 @@ class TipViewController: UIViewController{
     @IBOutlet weak var labelsView: UIView!
     @IBOutlet weak var labelsViewTopConstraint: NSLayoutConstraint!
     
+    // To set colors
+    @IBOutlet weak var tipView: UIView!
+    @IBOutlet weak var totalView: UIView!
+    @IBOutlet weak var splitByTwoView: UIView!
+    @IBOutlet weak var splitByThreeView: UIView!
+    @IBOutlet weak var splitByFourView: UIView!
     
     var user: UserManager?
     var billFieldWasEmpty: Bool?
+    var color: ColorManager?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,7 +53,6 @@ class TipViewController: UIViewController{
 
         // Default setting
         setupPercentControl()
-        setupTheme()
         billField.placeholder = user?.currencySymbol
         setupLabelTexts()
         setupBillFieldTopConstraint()
@@ -60,6 +66,9 @@ class TipViewController: UIViewController{
             }
         }
         billFieldWasEmpty = billField.text?.isEmpty
+        
+        color = ColorManager(status: (user?.theme)!)
+        setupTheme()
     }
     
     // I thought calling updateTheme everytime when viewWillAppear gets called is inefficient
@@ -85,9 +94,14 @@ class TipViewController: UIViewController{
     
     // Get theme state from user and set it
     func setupTheme() {
-        if let themeState = user?.theme {
-            view.backgroundColor = themeState ? UIColor.blackColor() : UIColor.whiteColor()
-        }
+        color?.colorStatus = user?.theme
+        navigationController?.navigationBar.tintColor = color?.mainColor
+        percentControl.tintColor = color?.mainColor
+        tipView.backgroundColor = color?.mainColor
+        totalView.backgroundColor = color?.totalColor
+        splitByTwoView.backgroundColor = color?.splitByTwoColor
+        splitByThreeView.backgroundColor = color?.splitByThreeColor
+        splitByFourView.backgroundColor = color?.splitByFourColor
     }
     
     // Set text in all the labels

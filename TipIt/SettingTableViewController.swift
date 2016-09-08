@@ -16,6 +16,7 @@ class SettingTableViewController: UITableViewController {
     
     var tipViewController: TipViewController?
     var user: UserManager?
+    var color: ColorManager?
     
     @IBOutlet weak var themeSwitch: UISwitch!
     
@@ -27,6 +28,14 @@ class SettingTableViewController: UITableViewController {
         setupPercentCell(changerMaxCell, text: "Max", index: 2)
         setupPercentCell(changerMidCell, text: "Mid", index: 1)
         setupPercentCell(changerMinCell, text: "Min", index: 0)
+        color = ColorManager(status: user!.theme!)
+        setupSliderColor(changerMaxCell.percentSlider)
+        setupSliderColor(changerMidCell.percentSlider)
+        setupSliderColor(changerMinCell.percentSlider)
+    }
+    
+    func setupSliderColor(slider: UISlider) {
+        slider.tintColor = color?.mainColor
     }
 
     func setupPercentCell(cell: ChangerCell, text: String, index: Int) {
@@ -54,5 +63,9 @@ class SettingTableViewController: UITableViewController {
         let switchState = sender.on ? true : false
         user?.theme = switchState
         tipViewController?.setupTheme()
+        color?.colorStatus = user?.theme
+        setupSliderColor(changerMaxCell.percentSlider)
+        setupSliderColor(changerMidCell.percentSlider)
+        setupSliderColor(changerMinCell.percentSlider)
     }
 }
