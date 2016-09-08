@@ -28,12 +28,25 @@ class TipViewController: UIViewController{
     @IBOutlet weak var splitByTwoView: UIView!
     @IBOutlet weak var splitByThreeView: UIView!
     @IBOutlet weak var splitByFourView: UIView!
-    
     var user: UserManager?
     var billFieldWasEmpty: Bool?
     var color: ColorManager?
     
-    @IBOutlet weak var testLabel: UILabel!
+    // People's label
+    // split by two
+    @IBOutlet weak var firstPersonOfSplitByTwo: UILabel!
+    @IBOutlet weak var secondPersonOfSplitByTwo: UILabel!
+    // split by three
+    @IBOutlet weak var firstPersonOfSplitByThree: UILabel!
+    @IBOutlet weak var secondPersonOfSplitByThree: UILabel!
+    @IBOutlet weak var thirdPersonOfSplitByThree: UILabel!
+    // split by four
+    @IBOutlet weak var firstPersonOfSplitByFour: UILabel!
+    @IBOutlet weak var secondPersonOfSplitByFour: UILabel!
+    @IBOutlet weak var thirdPersonOfSplitByFour: UILabel!
+    @IBOutlet weak var fourthPersonOfSplitByFour: UILabel!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -71,9 +84,20 @@ class TipViewController: UIViewController{
         
         color = ColorManager(status: (user?.theme)!)
         setupTheme()
-        
-        // FontAwesome
-        testLabel.FAIcon = FAType.FAUser
+        setupPeopleLabels()
+    }
+    
+    // FontAwesome
+    func setupPeopleLabels() {
+        firstPersonOfSplitByTwo.FAIcon = FAType.FAUser
+        secondPersonOfSplitByTwo.FAIcon = FAType.FAUser
+        firstPersonOfSplitByThree.FAIcon = FAType.FAUser
+        secondPersonOfSplitByThree.FAIcon = FAType.FAUser
+        thirdPersonOfSplitByThree.FAIcon = FAType.FAUser
+        firstPersonOfSplitByFour.FAIcon = FAType.FAUser
+        secondPersonOfSplitByFour.FAIcon = FAType.FAUser
+        thirdPersonOfSplitByThree.FAIcon = FAType.FAUser
+        fourthPersonOfSplitByFour.FAIcon = FAType.FAUser
     }
     
     // I thought calling updateTheme everytime when viewWillAppear gets called is inefficient

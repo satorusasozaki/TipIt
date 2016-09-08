@@ -422,16 +422,24 @@
                     <connections>
                         <outlet property="billField" destination="BHM-0U-NrV" id="RbW-4Z-auB"/>
                         <outlet property="billViewTopConstraint" destination="7d8-M1-mMU" id="236-eN-nFx"/>
+                        <outlet property="firstPersonOfSplitByFour" destination="a0G-Gf-i8u" id="ot3-D2-Zb9"/>
+                        <outlet property="firstPersonOfSplitByThree" destination="EcW-yk-y7f" id="ihN-sn-Qfj"/>
+                        <outlet property="firstPersonOfSplitByTwo" destination="AmR-4s-mvy" id="muS-VJ-jXR"/>
+                        <outlet property="fourthPersonOfSplitByFour" destination="1zq-3X-eq7" id="grd-m2-5nA"/>
                         <outlet property="labelsView" destination="42U-dV-YCC" id="MQQ-qf-DB1"/>
                         <outlet property="labelsViewTopConstraint" destination="V80-Wn-Uki" id="NPE-Ei-Cwt"/>
                         <outlet property="percentControl" destination="Q3o-Ih-8Jg" id="9F4-B5-Kzv"/>
+                        <outlet property="secondPersonOfSplitByFour" destination="eeu-Nl-t2F" id="Zfg-sP-Bdt"/>
+                        <outlet property="secondPersonOfSplitByThree" destination="9uf-Bs-ubY" id="fzm-gu-sGO"/>
+                        <outlet property="secondPersonOfSplitByTwo" destination="rQr-b4-bsC" id="T59-Yn-cTd"/>
                         <outlet property="splitByFourLabel" destination="zxH-l1-HZR" id="xEJ-2I-zxv"/>
                         <outlet property="splitByFourView" destination="RDv-zP-kdp" id="lEz-qA-0gN"/>
                         <outlet property="splitByThreeLabel" destination="AcB-6C-N8H" id="G9K-8F-Cfa"/>
                         <outlet property="splitByThreeView" destination="PGy-eh-UWD" id="5Cv-Ou-2Qe"/>
                         <outlet property="splitByTwoLabel" destination="FQ1-M7-051" id="EV8-T0-DU7"/>
                         <outlet property="splitByTwoView" destination="oL6-NM-hYN" id="zzu-q0-C6L"/>
-                        <outlet property="testLabel" destination="XxQ-nF-HkH" id="Nku-H5-bOn"/>
+                        <outlet property="thirdPersonOfSplitByFour" destination="0YM-ef-XVx" id="3KL-0t-Wfi"/>
+                        <outlet property="thirdPersonOfSplitByThree" destination="8bC-gY-g14" id="341-0E-U2i"/>
                         <outlet property="tipLabel" destination="K0m-HB-De7" id="w5R-Kb-Lra"/>
                         <outlet property="tipView" destination="duW-Pp-HQo" id="tth-0m-Tbs"/>
                         <outlet property="totalLabel" destination="2gN-UT-vV5" id="237-zc-lAr"/>
