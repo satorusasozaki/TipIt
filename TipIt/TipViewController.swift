@@ -96,7 +96,7 @@ class TipViewController: UIViewController{
         thirdPersonOfSplitByThree.FAIcon = FAType.FAUser
         firstPersonOfSplitByFour.FAIcon = FAType.FAUser
         secondPersonOfSplitByFour.FAIcon = FAType.FAUser
-        thirdPersonOfSplitByThree.FAIcon = FAType.FAUser
+        thirdPersonOfSplitByFour.FAIcon = FAType.FAUser
         fourthPersonOfSplitByFour.FAIcon = FAType.FAUser
     }
     
