@@ -27,12 +27,16 @@ class UserManager: NSObject {
     static let totalRecordKey = "totalRecord"
     static let dateRecordKey = "dateRecord"
     
+    var formatter: NSDateFormatter?
     var ud: NSUserDefaults?
     var percents: Percents?
     
     override init() {
         ud = NSUserDefaults.standardUserDefaults()
         percents = Percents(userDefault: ud!)
+        formatter = NSDateFormatter()
+        let template = NSDateFormatter.dateFormatFromTemplate("MM/dd/yyyy", options: 0, locale: NSLocale.currentLocale())
+        formatter!.dateFormat = template
         super.init()
     }
     
@@ -144,7 +148,9 @@ class UserManager: NSObject {
         }
     }
     
-    func addNewRecord(bill: String, tipPercent: String, total: String, date: String) {
+    func addNewRecord(bill: String, tipPercent: String, total: String) {
+
+        let date = formatter!.stringFromDate(NSDate())
         let record: [String:String] = [UserManager.billRecordKey: bill,
                                        UserManager.tipPercentRecordKey: tipPercent,
                                        UserManager.totalRecordKey: total,

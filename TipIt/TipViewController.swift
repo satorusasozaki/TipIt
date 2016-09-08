@@ -86,9 +86,17 @@ class TipViewController: UIViewController{
         setupTheme()
         setupPeopleLabels()
         
-        user?.addNewRecord("789", tipPercent: "0.1", total: "790", date: "1/23")
-        user?.addNewRecord("12", tipPercent: "0.2", total: "14", date: "6/25")
-        print(user?.records)
+        user?.addNewRecord("789", tipPercent: "0.1", total: "790")
+        user?.addNewRecord("12", tipPercent: "0.2", total: "14")
+    }
+    @IBAction func onSaveButton(sender: UIBarButtonItem) {
+        let bill = billField.text!.isEmpty ? user!.currencySymbol! + "0.00" : user!.currencySymbol! + billField.text!
+        let tipPercent = percentControl.titleForSegmentAtIndex(percentControl.selectedSegmentIndex)!
+        let total = totalLabel.text!
+        user?.addNewRecord(bill, tipPercent: tipPercent, total: total)
+        for record in user!.records! {
+            print(record)
+        }
     }
     
     // FontAwesome

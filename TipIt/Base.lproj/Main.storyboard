@@ -395,7 +395,11 @@
                         </connections>
                     </view>
                     <navigationItem key="navigationItem" id="8HM-dT-8Pr">
-                        <barButtonItem key="leftBarButtonItem" systemItem="save" id="bhP-GG-j8a"/>
+                        <barButtonItem key="leftBarButtonItem" systemItem="save" id="bhP-GG-j8a">
+                            <connections>
+                                <action selector="onSaveButton:" destination="BYZ-38-t0r" id="o3X-1x-F5V"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Setting" id="Adc-2s-Gwf">
                             <connections>
                                 <action selector="onSettingButton:" destination="BYZ-38-t0r" id="QOS-x6-U6n"/>
