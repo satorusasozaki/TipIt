@@ -15,6 +15,7 @@ class TipViewController: UIViewController{
     @IBOutlet weak var totalLabel: UILabel!
     @IBOutlet weak var splitByTwoLabel: UILabel!
     @IBOutlet weak var splitByThreeLabel: UILabel!
+    @IBOutlet weak var splitByFourLabel: UILabel!
     @IBOutlet weak var percentControl: UISegmentedControl!
     @IBOutlet weak var billViewTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var labelsView: UIView!
@@ -99,6 +100,7 @@ class TipViewController: UIViewController{
         totalLabel.text = (user?.currencySymbol)! + String(format: "%.2f", total!)
         splitByTwoLabel.text = (user?.currencySymbol)! + String(format: "%.2f", CalculatorBrain.splitBy(total!, numOfPeople: 2)!)
         splitByThreeLabel.text = (user?.currencySymbol)! + String(format: "%.2f", CalculatorBrain.splitBy(total!, numOfPeople: 3)!)
+        splitByFourLabel.text = (user?.currencySymbol)! + String(format: "%.2f", CalculatorBrain.splitBy(total!, numOfPeople: 4)!)
     }
     
     // MARK: Constraint

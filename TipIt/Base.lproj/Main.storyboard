@@ -198,6 +198,7 @@
                         <outlet property="labelsView" destination="42U-dV-YCC" id="MQQ-qf-DB1"/>
                         <outlet property="labelsViewTopConstraint" destination="V80-Wn-Uki" id="NPE-Ei-Cwt"/>
                         <outlet property="percentControl" destination="Q3o-Ih-8Jg" id="9F4-B5-Kzv"/>
+                        <outlet property="splitByFourLabel" destination="zxH-l1-HZR" id="xEJ-2I-zxv"/>
                         <outlet property="splitByThreeLabel" destination="AcB-6C-N8H" id="G9K-8F-Cfa"/>
                         <outlet property="splitByTwoLabel" destination="FQ1-M7-051" id="EV8-T0-DU7"/>
                         <outlet property="tipLabel" destination="K0m-HB-De7" id="w5R-Kb-Lra"/>
