@@ -85,6 +85,10 @@ class TipViewController: UIViewController{
         color = ColorManager(status: (user?.theme)!)
         setupTheme()
         setupPeopleLabels()
+        
+        user?.addNewRecord("789", tipPercent: "0.1", total: "790", date: "1/23")
+        user?.addNewRecord("12", tipPercent: "0.2", total: "14", date: "6/25")
+        print(user?.records)
     }
     
     // FontAwesome
