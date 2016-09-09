@@ -37,18 +37,24 @@ class HistoryTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("historyCell", forIndexPath: indexPath) as! HistoryCell
         let record = records![indexPath.row]
-        //cell.dateLabel.text = record[UserManager.dateRecordKey]
-        //cell.totalLabel.text = record[UserManager.totalRecordKey]
-        if let dateLabel = cell.dateLabel {
-            dateLabel.text = record[UserManager.dateRecordKey]
-        }
-        if let totalLabel = cell.totalLabel {
-            totalLabel.text = record[UserManager.totalRecordKey]
-        }
+        cell.dateLabel.text = record[UserManager.dateRecordKey]
+        cell.totalLabel.text = record[UserManager.totalRecordKey]
+
         
         return cell
     }
-
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let historyDetailVC = storyboard?.instantiateViewControllerWithIdentifier("historyDetailViewController") as! HistoryDetailViewController
+//        let record = records![indexPath.row]
+//        historyDetailVC.viewDidLoad()
+//        historyDetailVC.dateLabel.text = record[UserManager.dateRecordKey]
+//        historyDetailVC.billLabel.text = record[UserManager.billRecordKey]
+//        historyDetailVC.tipAmountLabel.text = record[UserManager.tipPercentRecordKey]
+//        historyDetailVC.totalAmountLabel.text = record[UserManager.totalRecordKey]
+        historyDetailVC.index = indexPath.row
+        self.navigationController?.pushViewController(historyDetailVC, animated: true)
+    }
 
     /*
     // Override to support conditional editing of the table view.
