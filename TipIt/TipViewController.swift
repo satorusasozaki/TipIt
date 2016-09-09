@@ -93,6 +93,12 @@ class TipViewController: UIViewController{
         for record in user!.records! {
             print(record)
         }
+        
+        // Show alert 
+        let alert = UIAlertController(title: "Saved", message: "\(bill) is saved to the history" , preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+        alert.view.tintColor = color?.mainColor
+        self.presentViewController(alert, animated: true, completion: {})
     }
     
     // FontAwesome
