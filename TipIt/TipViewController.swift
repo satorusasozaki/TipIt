@@ -71,7 +71,6 @@ class TipViewController: UIViewController{
         billField.placeholder = user?.currencySymbol
         setupLabelTexts()
         setupBillFieldTopConstraint()
-        setupLabelsTopConstraint()
         
         if let isEmpty = billField.text?.isEmpty  {
             if isEmpty {
@@ -156,11 +155,6 @@ class TipViewController: UIViewController{
     }
     
     // MARK: Constraint
-    // Set labels top constraint depending on if bill is empty or not
-    private func setupLabelsTopConstraint() {
-        //labelsViewTopConstraint.constant = (billField.text?.isEmpty)! ? 30 : 30
-    }
-    
     // Set billField top constraint depending on if bill is empty or not
     func setupBillFieldTopConstraint() {
         billViewTopConstraint.constant = (billField.text?.isEmpty)! ? UIScreen.mainScreen().bounds.size.height / 3 : 0
@@ -172,7 +166,6 @@ class TipViewController: UIViewController{
         // research let if
         if (billFieldGetsEmpty()!) {
             setupBillFieldTopConstraint()
-            setupLabelsTopConstraint()
             self.labelsView.alpha = 1
             UIView.animateWithDuration(0.4, animations: {
                 self.labelsView.alpha = 0
@@ -180,7 +173,6 @@ class TipViewController: UIViewController{
             })
         } else if (billFieldGetsFilled()!){
             setupBillFieldTopConstraint()
-            setupLabelsTopConstraint()
             self.labelsView.alpha = 0
             UIView.animateWithDuration(0.4, animations: {
                 self.labelsView.alpha = 1
