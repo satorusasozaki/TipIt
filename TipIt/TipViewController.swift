@@ -8,6 +8,7 @@
 
 import UIKit
 import Font_Awesome_Swift
+// https://github.com/Vaberer/Font-Awesome-Swift
 
 class TipViewController: UIViewController{
 
@@ -84,6 +85,11 @@ class TipViewController: UIViewController{
         color = ColorManager(status: (user?.theme)!)
         setupTheme()
         setupPeopleLabels()
+        
+        // set up icon
+        navigationItem.leftBarButtonItem?.FAIcon = FAType.FASave
+        navigationItem.rightBarButtonItem?.FAIcon = FAType.FACog
+        
     }
     @IBAction func onSaveButton(sender: UIBarButtonItem) {
         let bill = billField.text!.isEmpty ? user!.currencySymbol! + "0.00" : user!.currencySymbol! + billField.text!
