@@ -157,7 +157,7 @@ class TipViewController: UIViewController{
     // MARK: Constraint
     // Set billField top constraint depending on if bill is empty or not
     func setupBillFieldTopConstraint() {
-        billViewTopConstraint.constant = (billField.text?.isEmpty)! ? UIScreen.mainScreen().bounds.size.height / 3 : 0
+        billViewTopConstraint.constant = (billField.text?.isEmpty)! ? UIScreen.mainScreen().bounds.size.height / 4 : 0
     }
     
     // MARK: Animation
