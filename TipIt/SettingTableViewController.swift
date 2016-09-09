@@ -20,6 +20,7 @@ class SettingTableViewController: UITableViewController {
     
     @IBOutlet weak var themeSwitch: UISwitch!
     
+    @IBOutlet weak var historyCell: UITableViewCell!
     override func viewDidLoad() {
         super.viewDidLoad()
         user = UserManager()
@@ -67,5 +68,15 @@ class SettingTableViewController: UITableViewController {
         setupSliderColor(changerMaxCell.percentSlider)
         setupSliderColor(changerMidCell.percentSlider)
         setupSliderColor(changerMinCell.percentSlider)
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        if let cell = tableView.cellForRowAtIndexPath(indexPath) {
+            if cell == historyCell {
+                print("THIS")
+                let historyTVC = storyboard?.instantiateViewControllerWithIdentifier("historyTableViewController") as! HistoryTableViewController
+                self.navigationController?.pushViewController(historyTVC, animated: true)
+            }
+        }
     }
 }

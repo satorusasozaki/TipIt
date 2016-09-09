@@ -154,7 +154,7 @@ class UserManager: NSObject {
         let record: [String:String] = [UserManager.billRecordKey: bill,
                                        UserManager.tipPercentRecordKey: tipPercent,
                                        UserManager.totalRecordKey: total,
-                                       UserManager.recordKey: date]
+                                       UserManager.dateRecordKey: date]
         var r = records
         r?.append(record)
         ud?.setObject(r, forKey: UserManager.recordKey)

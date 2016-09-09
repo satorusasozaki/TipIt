@@ -85,9 +85,6 @@ class TipViewController: UIViewController{
         color = ColorManager(status: (user?.theme)!)
         setupTheme()
         setupPeopleLabels()
-        
-        user?.addNewRecord("789", tipPercent: "0.1", total: "790")
-        user?.addNewRecord("12", tipPercent: "0.2", total: "14")
     }
     @IBAction func onSaveButton(sender: UIBarButtonItem) {
         let bill = billField.text!.isEmpty ? user!.currencySymbol! + "0.00" : user!.currencySymbol! + billField.text!
