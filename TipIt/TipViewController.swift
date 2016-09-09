@@ -29,9 +29,9 @@ class TipViewController: UIViewController{
     @IBOutlet weak var splitByTwoView: UIView!
     @IBOutlet weak var splitByThreeView: UIView!
     @IBOutlet weak var splitByFourView: UIView!
-    var user: UserManager?
-    var billFieldWasEmpty: Bool?
-    var color: ColorManager?
+    private var user: UserManager?
+    private var billFieldWasEmpty: Bool?
+    private var color: ColorManager?
     
     // People's label
     // split by two
@@ -56,16 +56,17 @@ class TipViewController: UIViewController{
         billField.addTarget(self, action: #selector(TipViewController.animateViews), forControlEvents: UIControlEvents.EditingChanged)
         billField.addTarget(self, action: #selector(TipViewController.saveBill), forControlEvents: UIControlEvents.EditingDidEnd)
         percentControl.addTarget(self, action: #selector(TipViewController.setupLabelTexts), forControlEvents: UIControlEvents.ValueChanged)
+        
         // Make bill field the first responder
+        // billField.becomeFirstResponder() won't work
+        // billField text disappears when the keyboard gets toggle as the first responder
         billField.performSelector(#selector(UIResponder.becomeFirstResponder), withObject: nil, afterDelay: 0.5)
 
         user = UserManager()
-        // billField.becomeFirstResponder() won't work
-        // billField text disappears when the keyboard gets toggle as the first responder
+
         if let lastBill = user?.lastBill {
             billField.text = (user?.shouldDisplayLastBill)! ? String(lastBill) : ""
         }
-        //billField.text = (user?.shouldDisplayLastBill)! ? String((user?.lastBill)!) : ""
 
         // Default setting
         setupPercentControl()
@@ -124,7 +125,7 @@ class TipViewController: UIViewController{
     // updateTheme method is called when the theme switch has been changed in setting view controleller
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-
+        print(#function)
     }
     
     override func viewWillDisappear(animated: Bool) {

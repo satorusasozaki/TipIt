@@ -15,6 +15,7 @@ class HistoryDetailViewController: UIViewController {
     @IBOutlet weak var tipAmountLabel: UILabel!
     @IBOutlet weak var totalAmountLabel: UILabel!
     var index: Int?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         let user = UserManager()

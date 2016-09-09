@@ -9,8 +9,10 @@
 import UIKit
 
 class HistoryTableViewController: UITableViewController {
-    var user: UserManager?
-    var records: [[String:String]]?
+    
+    private var user: UserManager?
+    private var records: [[String:String]]?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         user = UserManager()

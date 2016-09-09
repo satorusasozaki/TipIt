@@ -13,14 +13,13 @@ class SettingTableViewController: UITableViewController {
     @IBOutlet weak var changerMaxCell: ChangerCell!
     @IBOutlet weak var changerMidCell: ChangerCell!
     @IBOutlet weak var changerMinCell: ChangerCell!
-    
-    var tipViewController: TipViewController?
-    var user: UserManager?
-    var color: ColorManager?
-    
     @IBOutlet weak var themeSwitch: UISwitch!
-    
     @IBOutlet weak var historyCell: UITableViewCell!
+    
+    private var tipViewController: TipViewController?
+    private var user: UserManager?
+    private var color: ColorManager?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         user = UserManager()

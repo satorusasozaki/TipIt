@@ -14,11 +14,11 @@ import UIKit
 class UserManager: NSObject {
     
     //var ud: NSUserDefaults?
-    static let persistentPeriod = 100 * 60
-    static let percentsKey = "percents"
-    static let themeKey = "theme"
-    static let lastBillKey = "lastBill"
-    static let lastDateKey = "lastDate"
+    private static let persistentPeriod = 100 * 60
+    private static let percentsKey = "percents"
+    private static let themeKey = "theme"
+    private static let lastBillKey = "lastBill"
+    private static let lastDateKey = "lastDate"
     
     // keys for records
     static let recordKey = "record"
@@ -27,15 +27,19 @@ class UserManager: NSObject {
     static let totalRecordKey = "totalRecord"
     static let dateRecordKey = "dateRecord"
     
-    var formatter: NSDateFormatter?
-    var ud: NSUserDefaults?
+    // For timestamp in record
+    private var formatter: NSDateFormatter?
+    private static let dateFormat = "MM/dd/yyyy"
+    
+    private var ud: NSUserDefaults?
     var percents: Percents?
     
     override init() {
         ud = NSUserDefaults.standardUserDefaults()
         percents = Percents(userDefault: ud!)
         formatter = NSDateFormatter()
-        let template = NSDateFormatter.dateFormatFromTemplate("MM/dd/yyyy", options: 0, locale: NSLocale.currentLocale())
+        let template = NSDateFormatter.dateFormatFromTemplate(UserManager.dateFormat, options: 0, locale: NSLocale.currentLocale())
+        
         formatter!.dateFormat = template
         super.init()
     }
@@ -118,6 +122,7 @@ class UserManager: NSObject {
         }
     }
     
+    // Tells a client class (tip view controller) if it should display the last bill
     var shouldDisplayLastBill: Bool? {
         get {
             if let lastDate = lastDate {
@@ -133,7 +138,7 @@ class UserManager: NSObject {
         }
     }
     
-    // For record
+    // MARK: - Records
     var records: [[String:String]]? {
         get {
             if let r = ud?.objectForKey(UserManager.recordKey) {
