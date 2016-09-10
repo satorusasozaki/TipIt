@@ -34,6 +34,8 @@ class SettingTableViewController: UITableViewController {
         setupSliderColor(changerMinCell.percentSlider)
     }
     
+    // MARK: - Percent Cell
+    
     func setupSliderColor(slider: UISlider) {
         slider.tintColor = color?.mainColor
     }
@@ -59,9 +61,10 @@ class SettingTableViewController: UITableViewController {
         tipViewController!.setupPercentControl()
     }
     
+    // MARK: - Theme
+    
     @IBAction func onThemeSwitch(sender: UISwitch) {
-        let switchState = sender.on ? true : false
-        user?.theme = switchState
+        user?.theme = sender.on
         tipViewController?.setupTheme()
         color?.colorStatus = user?.theme
         setupSliderColor(changerMaxCell.percentSlider)
@@ -69,10 +72,12 @@ class SettingTableViewController: UITableViewController {
         setupSliderColor(changerMinCell.percentSlider)
     }
     
+    // MARK: - Transition to detail view
+
+    
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if let cell = tableView.cellForRowAtIndexPath(indexPath) {
             if cell == historyCell {
-                print("THIS")
                 let historyTVC = storyboard?.instantiateViewControllerWithIdentifier("historyTableViewController") as! HistoryTableViewController
                 self.navigationController?.pushViewController(historyTVC, animated: true)
             }

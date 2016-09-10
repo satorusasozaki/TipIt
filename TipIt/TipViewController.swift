@@ -60,27 +60,23 @@ class TipViewController: UIViewController{
         // billField.becomeFirstResponder() won't work
         // billField text disappears when the keyboard gets toggle as the first responder
         // billField.performSelector(#selector(UIResponder.becomeFirstResponder), withObject: nil, afterDelay: 0)
-        billField.becomeFirstResponder()
-
-        // Initial setup
+        
+        // Create managers
         user = UserManager()
+        color = ColorManager(status: (user?.theme)!)
+        
+        // Initial view setups
         setupPercentControl()
-        billField.placeholder = user?.currencySymbol
         setupLabelTexts()
         setupBillFieldTopConstraint()
-        
-        if let isEmpty = billField.text?.isEmpty  {
-            if isEmpty {
-                labelsView.alpha = 0
-            } else {
-                labelsView.alpha = 1
-            }
-        }
-        billFieldWasEmpty = billField.text?.isEmpty
-        
-        color = ColorManager(status: (user?.theme)!)
         setupTheme()
-        setupPeopleLabels()
+        setupSplitIcons()
+        labelsView.alpha = 0
+        
+        // Set up bill field
+        billField.becomeFirstResponder()
+        billField.placeholder = user?.currencySymbol
+        billFieldWasEmpty = billField.text?.isEmpty
         
         // set up icon
         navigationItem.leftBarButtonItem?.FAIcon = FAType.FASave
@@ -92,35 +88,7 @@ class TipViewController: UIViewController{
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(onSuspend), name: UIApplicationWillResignActiveNotification, object: nil)
         
     }
-    @IBAction func onSaveButton(sender: UIBarButtonItem) {
-        let bill = billField.text!.isEmpty ? user!.currencySymbol! + "0.00" : user!.currencySymbol! + billField.text!
-        let tipPercent = percentControl.titleForSegmentAtIndex(percentControl.selectedSegmentIndex)!
-        let total = totalLabel.text!
-        user?.addNewRecord(bill, tipPercent: tipPercent, total: total)
-        for record in user!.records! {
-            print(record)
-        }
-        
-        // Show alert 
-        let alert = UIAlertController(title: "Saved", message: "\(bill) is saved to the history" , preferredStyle: UIAlertControllerStyle.Alert)
-        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
-        alert.view.tintColor = color?.mainColor
-        self.presentViewController(alert, animated: true, completion: {})
-    }
-    
-    // FontAwesome
-    func setupPeopleLabels() {
-        firstPersonOfSplitByTwo.FAIcon = FAType.FAUser
-        secondPersonOfSplitByTwo.FAIcon = FAType.FAUser
-        firstPersonOfSplitByThree.FAIcon = FAType.FAUser
-        secondPersonOfSplitByThree.FAIcon = FAType.FAUser
-        thirdPersonOfSplitByThree.FAIcon = FAType.FAUser
-        firstPersonOfSplitByFour.FAIcon = FAType.FAUser
-        secondPersonOfSplitByFour.FAIcon = FAType.FAUser
-        thirdPersonOfSplitByFour.FAIcon = FAType.FAUser
-        fourthPersonOfSplitByFour.FAIcon = FAType.FAUser
-    }
-    
+
     // I thought calling updateTheme everytime when viewWillAppear gets called is inefficient
     // updateTheme method is called when the theme switch has been changed in setting view controleller
     override func viewWillAppear(animated: Bool) {
@@ -128,7 +96,7 @@ class TipViewController: UIViewController{
         print(#function)
     }
     
-    // MARK: Setups
+    // MARK: View setups
     // Configure percent control with values from user default
     func setupPercentControl() {
         let percents = user?.percents!
@@ -162,6 +130,20 @@ class TipViewController: UIViewController{
         splitByThreeLabel.text = (user?.currencySymbol)! + String(format: "%.2f", CalculatorBrain.splitBy(total!, numOfPeople: 3)!)
         splitByFourLabel.text = (user?.currencySymbol)! + String(format: "%.2f", CalculatorBrain.splitBy(total!, numOfPeople: 4)!)
     }
+    
+    // FontAwesome
+    func setupSplitIcons() {
+        firstPersonOfSplitByTwo.FAIcon = FAType.FAUser
+        secondPersonOfSplitByTwo.FAIcon = FAType.FAUser
+        firstPersonOfSplitByThree.FAIcon = FAType.FAUser
+        secondPersonOfSplitByThree.FAIcon = FAType.FAUser
+        thirdPersonOfSplitByThree.FAIcon = FAType.FAUser
+        firstPersonOfSplitByFour.FAIcon = FAType.FAUser
+        secondPersonOfSplitByFour.FAIcon = FAType.FAUser
+        thirdPersonOfSplitByFour.FAIcon = FAType.FAUser
+        fourthPersonOfSplitByFour.FAIcon = FAType.FAUser
+    }
+    
     
     // MARK: Constraint
     // Set billField top constraint depending on if bill is empty or not
@@ -209,12 +191,7 @@ class TipViewController: UIViewController{
         return false
     }
     
-    // MARK: General
-    // Save bill text to NSUserDefault when the editing is done
-    // Date will be saved when applicationWillResignActive is called
-    func saveBill() {
-        user?.lastBill = Double(billField.text!)
-    }
+    // MARK: - Outlet Action
     
     // To hide keyboard
     @IBAction func onTapTipViewController(sender: UITapGestureRecognizer) {
@@ -228,6 +205,23 @@ class TipViewController: UIViewController{
         navigationController?.pushViewController(settingTableViewController!, animated: true)
     }
     
+    @IBAction func onSaveButton(sender: UIBarButtonItem) {
+        let bill = billField.text!.isEmpty ? user!.currencySymbol! + "0.00" : user!.currencySymbol! + billField.text!
+        let tipPercent = percentControl.titleForSegmentAtIndex(percentControl.selectedSegmentIndex)!
+        let total = totalLabel.text!
+        user?.addNewRecord(bill, tipPercent: tipPercent, total: total)
+        for record in user!.records! {
+            print(record)
+        }
+        // Show alert
+        let alert = UIAlertController(title: "Saved", message: "\(bill) is saved to the history" , preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+        alert.view.tintColor = color?.mainColor
+        self.presentViewController(alert, animated: true, completion: {})
+    }
+    
+    // MARK: - Methods Pluged into App Lifecycle
+    
     // Called when applicationWillResignActiveNotification by notification center
     func onSuspend() {
         user?.lastBill = Double(billField.text!)
@@ -238,11 +232,18 @@ class TipViewController: UIViewController{
     func onResume() {
         if let lastBill = user?.lastBill {
             if user!.shouldDisplayLastBill {
-                billField.text = String(lastBill)
+                billField.text = lastBill.cleanValue
             } else {
                 billField.text = ""
             }
         }
         animateViews()
+    }
+}
+
+// Prevent double from unnecessary 0 decimal value being added  
+extension Double {
+    var cleanValue: String {
+        return self % 1 == 0 ? String(format: "%.0f", self) : String(self)
     }
 }
