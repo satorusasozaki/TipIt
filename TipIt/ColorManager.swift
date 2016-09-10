@@ -17,7 +17,7 @@ class ColorManager: NSObject {
         super.init()
         colorStatus = status
     }
-    
+
     private static let general = "general"
     private static let total = "total"
     private static let splitByTwo = "splitByTwo"
@@ -25,15 +25,15 @@ class ColorManager: NSObject {
     private static let splitByFour = "splitByFour"
     
     private static let green: [String:String] = [general: "#219965",
-                                          total: "#25ae73",
-                                          splitByTwo: "#2ac381",
-                                          splitByThree: "#33d38e",
-                                          splitByFour: "#48d89a"]
+                                                 total: "#25ae73",
+                                                 splitByTwo: "#2ac381",
+                                                 splitByThree: "#33d38e",
+                                                 splitByFour: "#48d89a"]
     private static let yellow: [String:String] = [general: "#b69105",
-                                         total: "#cfa505",
-                                         splitByTwo: "#e8b906",
-                                         splitByThree: "#f9c80e",
-                                         splitByFour: "#face27"]
+                                                  total: "#cfa505",
+                                                  splitByTwo: "#e8b906",
+                                                  splitByThree: "#f9c80e",
+                                                  splitByFour: "#face27"]
     
     var mainColor: UIColor {
         get {

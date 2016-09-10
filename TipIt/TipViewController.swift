@@ -58,7 +58,6 @@ class TipViewController: UIViewController{
         // Create managers
         user = UserManager()
         color = ColorManager(status: (user?.theme)!)
-        
         // Initial view setups
         setupPercentControl()
         setupLabelTexts()
@@ -80,7 +79,6 @@ class TipViewController: UIViewController{
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(onResume), name: UIApplicationDidBecomeActiveNotification, object: nil)
         // add observer to save the last bill and its date to NSUserDefault
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(onSuspend), name: UIApplicationWillResignActiveNotification, object: nil)
-        
     }
     
     // MARK: View setups

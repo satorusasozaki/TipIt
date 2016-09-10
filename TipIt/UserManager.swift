@@ -22,10 +22,6 @@ class UserManager: NSObject {
     
     // keys for records
     static let recordKey = "record"
-    static let billRecordKey = "billRecord"
-    static let tipPercentRecordKey = "tipPercentRecord"
-    static let totalRecordKey = "totalRecord"
-    static let dateRecordKey = "dateRecord"
     
     // For timestamp in record
     private var formatter: NSDateFormatter?
@@ -143,12 +139,12 @@ class UserManager: NSObject {
     }
     
     // MARK: - Records
-    var records: [[String:String]]? {
+    var records: [BillRecord]? {
         get {
             if let r = ud?.objectForKey(UserManager.recordKey) {
-                return r as? [[String : String]]
+                return r as? [BillRecord]
             } else {
-                let dictionaries = [[String:String]]()
+                let dictionaries = [BillRecord]()
                 ud?.setObject(dictionaries, forKey: UserManager.recordKey)
                 return dictionaries
             }
@@ -157,26 +153,21 @@ class UserManager: NSObject {
         }
     }
     
+    // user.addnewrecord()
+    // user.records
+    
+    // records.addnewrecords()
+    
+    // Make record a class
+    // record = records[0]
+    // record.getBill
+    
     func addNewRecord(bill: String, tipPercent: String, total: String) {
 
         let date = formatter!.stringFromDate(NSDate())
-        let record: [String:String] = [UserManager.billRecordKey: bill,
-                                       UserManager.tipPercentRecordKey: tipPercent,
-                                       UserManager.totalRecordKey: total,
-                                       UserManager.dateRecordKey: date]
+        let record: BillRecord = BillRecord(bill: bill, tipPercent: tipPercent, total: total, date: date)
         var r = records
         r?.append(record)
         ud?.setObject(r, forKey: UserManager.recordKey)
     }
 }
-
-
-
-
-
-
-
-
-
-
-
