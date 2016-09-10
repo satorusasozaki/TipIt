@@ -28,11 +28,11 @@ class BillRecord: NSObject {
         super.init()
     }
     
+    // init with an item from [[String:String]]
     init(rawRecord: [String:String]) {
         self.bill = rawRecord[BillRecord.billRecordKey]
         self.tipPercent = rawRecord[BillRecord.tipPercentRecordKey]
         self.total = rawRecord[BillRecord.totalRecordKey]
         self.date = rawRecord[BillRecord.dateRecordKey]
     }
-    
 }
