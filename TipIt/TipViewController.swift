@@ -54,17 +54,16 @@ class TipViewController: UIViewController{
         // Add target
         billField.addTarget(self, action: #selector(TipViewController.setupLabelTexts), forControlEvents: UIControlEvents.EditingChanged)
         billField.addTarget(self, action: #selector(TipViewController.animateViews), forControlEvents: UIControlEvents.EditingChanged)
-        billField.addTarget(self, action: #selector(TipViewController.saveBill), forControlEvents: UIControlEvents.EditingChanged)
         percentControl.addTarget(self, action: #selector(TipViewController.setupLabelTexts), forControlEvents: UIControlEvents.ValueChanged)
         
         // Make bill field the first responder
         // billField.becomeFirstResponder() won't work
         // billField text disappears when the keyboard gets toggle as the first responder
-        billField.performSelector(#selector(UIResponder.becomeFirstResponder), withObject: nil, afterDelay: 0.5)
+        // billField.performSelector(#selector(UIResponder.becomeFirstResponder), withObject: nil, afterDelay: 0)
+        billField.becomeFirstResponder()
 
+        // Initial setup
         user = UserManager()
-
-        // Default setting
         setupPercentControl()
         billField.placeholder = user?.currencySymbol
         setupLabelTexts()
@@ -89,6 +88,8 @@ class TipViewController: UIViewController{
         
         // add observer to determine whether to set lastBill to billField when applicationDidBecomeActive
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(onResume), name: UIApplicationDidBecomeActiveNotification, object: nil)
+        // add observer to save the last bill and its date to NSUserDefault
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(onSuspend), name: UIApplicationDidEnterBackgroundNotification, object: nil)
         
     }
     @IBAction func onSaveButton(sender: UIBarButtonItem) {
@@ -127,10 +128,6 @@ class TipViewController: UIViewController{
         print(#function)
     }
     
-    override func viewWillDisappear(animated: Bool) {
-        super.viewWillDisappear(animated)
-    }
-    
     // MARK: Setups
     // Configure percent control with values from user default
     func setupPercentControl() {
@@ -155,7 +152,6 @@ class TipViewController: UIViewController{
     
     // Set text in all the labels
     func setupLabelTexts() {
-        print(#function)
         let bill = Double(billField.text!) ?? 0
         let percent = user?.percents![percentControl.selectedSegmentIndex]
         let total = CalculatorBrain.getTotalAmount(bill, percent: percent!)
@@ -232,6 +228,12 @@ class TipViewController: UIViewController{
         navigationController?.pushViewController(settingTableViewController!, animated: true)
     }
     
+    // Called when applicationDidEnterBackground by notification center
+    func onSuspend() {
+        user?.lastBill = Double(billField.text!)
+    }
+    
+    // Called when applicationDidBecomeActive by notification center
     func onResume() {
         if let lastBill = user?.lastBill {
             if user!.shouldDisplayLastBill {
