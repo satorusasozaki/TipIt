@@ -54,7 +54,7 @@ class TipViewController: UIViewController{
         // Add target
         billField.addTarget(self, action: #selector(TipViewController.setupLabelTexts), forControlEvents: UIControlEvents.EditingChanged)
         billField.addTarget(self, action: #selector(TipViewController.animateViews), forControlEvents: UIControlEvents.EditingChanged)
-        billField.addTarget(self, action: #selector(TipViewController.saveBill), forControlEvents: UIControlEvents.EditingDidEnd)
+        billField.addTarget(self, action: #selector(TipViewController.saveBill), forControlEvents: UIControlEvents.EditingChanged)
         percentControl.addTarget(self, action: #selector(TipViewController.setupLabelTexts), forControlEvents: UIControlEvents.ValueChanged)
         
         // Make bill field the first responder
@@ -64,9 +64,9 @@ class TipViewController: UIViewController{
 
         user = UserManager()
 
-        if let lastBill = user?.lastBill {
-            billField.text = (user?.shouldDisplayLastBill)! ? String(lastBill) : ""
-        }
+//        if let lastBill = user?.lastBill {
+//            billField.text = String(lastBill)
+//        }
 
         // Default setting
         setupPercentControl()
@@ -90,6 +90,9 @@ class TipViewController: UIViewController{
         // set up icon
         navigationItem.leftBarButtonItem?.FAIcon = FAType.FASave
         navigationItem.rightBarButtonItem?.FAIcon = FAType.FACog
+        
+        // add observer to determine whether to set lastBill to billField when applicationDidBecomeActive
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(onResume), name: UIApplicationDidBecomeActiveNotification, object: nil)
         
     }
     @IBAction func onSaveButton(sender: UIBarButtonItem) {
@@ -156,6 +159,7 @@ class TipViewController: UIViewController{
     
     // Set text in all the labels
     func setupLabelTexts() {
+        print(#function)
         let bill = Double(billField.text!) ?? 0
         let percent = user?.percents![percentControl.selectedSegmentIndex]
         let total = CalculatorBrain.getTotalAmount(bill, percent: percent!)
@@ -215,9 +219,9 @@ class TipViewController: UIViewController{
     
     // MARK: General
     // Save bill text to NSUserDefault when the editing is done
+    // Date will be saved when applicationWillResignActive is called
     func saveBill() {
         user?.lastBill = Double(billField.text!)
-        user?.lastDate = NSDate()
     }
     
     // To hide keyboard
@@ -230,5 +234,24 @@ class TipViewController: UIViewController{
         print(#function)
         let settingTableViewController = storyboard?.instantiateViewControllerWithIdentifier("SettingTableViewController")
         navigationController?.pushViewController(settingTableViewController!, animated: true)
+    }
+    
+    func onResume() {
+        if let lastBill = user?.lastBill {
+            if user!.shouldDisplayLastBill {
+                billField.text = String(lastBill)
+            } else {
+                billField.text = ""
+            }
+        }
+        setupBillFieldTopConstraint()
+        if let isEmpty = billField.text?.isEmpty  {
+            if isEmpty {
+                labelsView.alpha = 0
+            } else {
+                labelsView.alpha = 1
+            }
+        }
+        billFieldWasEmpty = billField.text?.isEmpty
     }
 }

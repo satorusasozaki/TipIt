@@ -14,7 +14,7 @@ import UIKit
 class UserManager: NSObject {
     
     //var ud: NSUserDefaults?
-    private static let persistentPeriod = 100 * 60
+    private static let persistentPeriod = 2
     private static let percentsKey = "percents"
     private static let themeKey = "theme"
     private static let lastBillKey = "lastBill"
@@ -123,7 +123,7 @@ class UserManager: NSObject {
     }
     
     // Tells a client class (tip view controller) if it should display the last bill
-    var shouldDisplayLastBill: Bool? {
+    var shouldDisplayLastBill: Bool {
         get {
             if let lastDate = lastDate {
                 //http://stackoverflow.com/questions/11121459/how-to-convert-nstimeinterval-to-int
