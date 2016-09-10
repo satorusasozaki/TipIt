@@ -74,7 +74,6 @@ class SettingTableViewController: UITableViewController {
     
     // MARK: - Transition to detail view
 
-    
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if let cell = tableView.cellForRowAtIndexPath(indexPath) {
             if cell == historyCell {

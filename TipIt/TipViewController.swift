@@ -47,20 +47,14 @@ class TipViewController: UIViewController{
     @IBOutlet weak var thirdPersonOfSplitByFour: UILabel!
     @IBOutlet weak var fourthPersonOfSplitByFour: UILabel!
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Add target
+        // Add actions to views
         billField.addTarget(self, action: #selector(TipViewController.setupLabelTexts), forControlEvents: UIControlEvents.EditingChanged)
         billField.addTarget(self, action: #selector(TipViewController.animateViews), forControlEvents: UIControlEvents.EditingChanged)
         percentControl.addTarget(self, action: #selector(TipViewController.setupLabelTexts), forControlEvents: UIControlEvents.ValueChanged)
-        
-        // Make bill field the first responder
-        // billField.becomeFirstResponder() won't work
-        // billField text disappears when the keyboard gets toggle as the first responder
-        // billField.performSelector(#selector(UIResponder.becomeFirstResponder), withObject: nil, afterDelay: 0)
-        
+
         // Create managers
         user = UserManager()
         color = ColorManager(status: (user?.theme)!)
@@ -87,13 +81,6 @@ class TipViewController: UIViewController{
         // add observer to save the last bill and its date to NSUserDefault
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(onSuspend), name: UIApplicationWillResignActiveNotification, object: nil)
         
-    }
-
-    // I thought calling updateTheme everytime when viewWillAppear gets called is inefficient
-    // updateTheme method is called when the theme switch has been changed in setting view controleller
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        print(#function)
     }
     
     // MARK: View setups
@@ -144,14 +131,15 @@ class TipViewController: UIViewController{
         fourthPersonOfSplitByFour.FAIcon = FAType.FAUser
     }
     
-    
     // MARK: Constraint
+    
     // Set billField top constraint depending on if bill is empty or not
     func setupBillFieldTopConstraint() {
         billViewTopConstraint.constant = (billField.text?.isEmpty)! ? UIScreen.mainScreen().bounds.size.height / 4 : 0
     }
     
     // MARK: Animation
+    
     // Animate views if needed. Called every time bill field is changed
     func animateViews() {
         // research let if
@@ -173,6 +161,7 @@ class TipViewController: UIViewController{
     }
     
     // MARK: Logic
+    
     // When bill gets empty, returns true
     func billFieldGetsEmpty() -> Bool! {
         if (!billFieldWasEmpty! && billField.text!.isEmpty) {
@@ -198,21 +187,19 @@ class TipViewController: UIViewController{
         self.view.endEditing(true)
     }
     
-    // Push setting view controller
+    // Push to setting view controller
     @IBAction func onSettingButton(sender: UIBarButtonItem) {
-        print(#function)
         let settingTableViewController = storyboard?.instantiateViewControllerWithIdentifier("SettingTableViewController")
         navigationController?.pushViewController(settingTableViewController!, animated: true)
     }
     
     @IBAction func onSaveButton(sender: UIBarButtonItem) {
+        // Get values needed from views and commit them to user
         let bill = billField.text!.isEmpty ? user!.currencySymbol! + "0.00" : user!.currencySymbol! + billField.text!
         let tipPercent = percentControl.titleForSegmentAtIndex(percentControl.selectedSegmentIndex)!
         let total = totalLabel.text!
         user?.addNewRecord(bill, tipPercent: tipPercent, total: total)
-        for record in user!.records! {
-            print(record)
-        }
+
         // Show alert
         let alert = UIAlertController(title: "Saved", message: "\(bill) is saved to the history" , preferredStyle: UIAlertControllerStyle.Alert)
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
@@ -231,11 +218,7 @@ class TipViewController: UIViewController{
     // Called when applicationDidBecomeActive by notification center
     func onResume() {
         if let lastBill = user?.lastBill {
-            if user!.shouldDisplayLastBill {
-                billField.text = lastBill.cleanValue
-            } else {
-                billField.text = ""
-            }
+            billField.text = user!.shouldDisplayLastBill ? lastBill.cleanValue : ""
         }
         animateViews()
     }

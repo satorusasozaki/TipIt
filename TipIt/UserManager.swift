@@ -36,27 +36,30 @@ class UserManager: NSObject {
     
     override init() {
         ud = NSUserDefaults.standardUserDefaults()
+        // Instantiate Percents struct
         percents = Percents(userDefault: ud!)
         formatter = NSDateFormatter()
-        let template = NSDateFormatter.dateFormatFromTemplate(UserManager.dateFormat, options: 0, locale: NSLocale.currentLocale())
-        
-        formatter!.dateFormat = template
+        formatter!.dateFormat = NSDateFormatter.dateFormatFromTemplate(UserManager.dateFormat, options: 0, locale: NSLocale.currentLocale())
         super.init()
     }
     
+    // Percents struct represents a virtual array of percent values
     struct Percents {
-        var defaults: NSUserDefaults?
+        let defaults: NSUserDefaults?
         let count = 3
+        
         init(userDefault: NSUserDefaults) {
             defaults = userDefault
         }
+        
+        // With this operator, a client can get a percent value at index by percents[0]
         subscript (i: Int) -> Double {
             get {
                 if i >= 0 && i <= 2 {
                     if let percents = defaults?.objectForKey(UserManager.percentsKey) as? [Double] {
                         return percents[i]
                     } else {
-                        // Initialize if the value is nil
+                        // Initialize if percents in NUD has not initialized yet and is nil
                         let percents: [Double] = [0.1, 0.15, 0.2]
                         defaults?.setObject(percents, forKey: UserManager.percentsKey)
                         return percents[i]
@@ -64,6 +67,7 @@ class UserManager: NSObject {
                 }
                 return 0
             }
+            
             set {
                 if i >= 0 && i <= 2 {
                     if var percents = defaults?.objectForKey(UserManager.percentsKey) as? [Double] {

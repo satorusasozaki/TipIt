@@ -34,8 +34,6 @@ class HistoryTableViewController: UITableViewController {
         let record = records![indexPath.row]
         cell.dateLabel.text = record[UserManager.dateRecordKey]
         cell.totalLabel.text = record[UserManager.totalRecordKey]
-
-        
         return cell
     }
     
