@@ -64,10 +64,6 @@ class TipViewController: UIViewController{
 
         user = UserManager()
 
-//        if let lastBill = user?.lastBill {
-//            billField.text = String(lastBill)
-//        }
-
         // Default setting
         setupPercentControl()
         billField.placeholder = user?.currencySymbol
@@ -244,14 +240,6 @@ class TipViewController: UIViewController{
                 billField.text = ""
             }
         }
-        setupBillFieldTopConstraint()
-        if let isEmpty = billField.text?.isEmpty  {
-            if isEmpty {
-                labelsView.alpha = 0
-            } else {
-                labelsView.alpha = 1
-            }
-        }
-        billFieldWasEmpty = billField.text?.isEmpty
+        animateViews()
     }
 }
