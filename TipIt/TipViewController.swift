@@ -89,7 +89,7 @@ class TipViewController: UIViewController{
         // add observer to determine whether to set lastBill to billField when applicationDidBecomeActive
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(onResume), name: UIApplicationDidBecomeActiveNotification, object: nil)
         // add observer to save the last bill and its date to NSUserDefault
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(onSuspend), name: UIApplicationDidEnterBackgroundNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(onSuspend), name: UIApplicationWillResignActiveNotification, object: nil)
         
     }
     @IBAction func onSaveButton(sender: UIBarButtonItem) {
@@ -228,9 +228,10 @@ class TipViewController: UIViewController{
         navigationController?.pushViewController(settingTableViewController!, animated: true)
     }
     
-    // Called when applicationDidEnterBackground by notification center
+    // Called when applicationWillResignActiveNotification by notification center
     func onSuspend() {
         user?.lastBill = Double(billField.text!)
+        user?.lastDate = NSDate()
     }
     
     // Called when applicationDidBecomeActive by notification center

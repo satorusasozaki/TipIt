@@ -14,7 +14,7 @@ import UIKit
 class UserManager: NSObject {
     
     //var ud: NSUserDefaults?
-    private static let persistentPeriod = 2
+    private static let persistentPeriod = 10
     private static let percentsKey = "percents"
     private static let themeKey = "theme"
     private static let lastBillKey = "lastBill"
