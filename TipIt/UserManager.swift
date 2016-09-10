@@ -29,11 +29,13 @@ class UserManager: NSObject {
     
     private var ud: NSUserDefaults?
     var percents: Percents?
+    var records: Records?
     
     override init() {
         ud = NSUserDefaults.standardUserDefaults()
         // Instantiate Percents struct
-        percents = Percents(userDefault: ud!)
+        percents = Percents(ud: ud!)
+        records = Records(ud: ud!)
         formatter = NSDateFormatter()
         formatter!.dateFormat = NSDateFormatter.dateFormatFromTemplate(UserManager.dateFormat, options: 0, locale: NSLocale.currentLocale())
         super.init()
@@ -41,23 +43,23 @@ class UserManager: NSObject {
     
     // Percents struct represents a virtual array of percent values
     struct Percents {
-        let defaults: NSUserDefaults?
+        let ud: NSUserDefaults?
         let count = 3
         
-        init(userDefault: NSUserDefaults) {
-            defaults = userDefault
+        init(ud: NSUserDefaults) {
+            self.ud = ud
         }
         
         // With this operator, a client can get a percent value at index by percents[0]
         subscript (i: Int) -> Double {
             get {
                 if i >= 0 && i <= 2 {
-                    if let percents = defaults?.objectForKey(UserManager.percentsKey) as? [Double] {
+                    if let percents = ud?.objectForKey(UserManager.percentsKey) as? [Double] {
                         return percents[i]
                     } else {
                         // Initialize if percents in NUD has not initialized yet and is nil
                         let percents: [Double] = [0.1, 0.15, 0.2]
-                        defaults?.setObject(percents, forKey: UserManager.percentsKey)
+                        ud?.setObject(percents, forKey: UserManager.percentsKey)
                         return percents[i]
                     }
                 }
@@ -66,14 +68,14 @@ class UserManager: NSObject {
             
             set {
                 if i >= 0 && i <= 2 {
-                    if var percents = defaults?.objectForKey(UserManager.percentsKey) as? [Double] {
+                    if var percents = ud?.objectForKey(UserManager.percentsKey) as? [Double] {
                         percents[i] = newValue
-                        defaults!.setObject(percents, forKey: UserManager.percentsKey)
+                        ud!.setObject(percents, forKey: UserManager.percentsKey)
                     } else {
                         // Initialize if the value is nil
                         var percents: [Double] = [0.1, 0.15, 0.2]
                         percents[i] = newValue
-                        defaults?.setObject(percents, forKey: UserManager.percentsKey)
+                        ud?.setObject(percents, forKey: UserManager.percentsKey)
                     }
                 }
             }
@@ -139,18 +141,38 @@ class UserManager: NSObject {
     }
     
     // MARK: - Records
-    var records: [BillRecord]? {
-        get {
-            if let r = ud?.objectForKey(UserManager.recordKey) {
-                return r as? [BillRecord]
+    
+    // Wrapper
+    struct Records {
+        
+        let ud: NSUserDefaults?
+        var count: Int
+        
+        init(ud: NSUserDefaults) {
+            self.ud = ud
+            if let records = ud.objectForKey(UserManager.recordKey) {
+                let records = records as! [[String:String]]
+                count = records.count
             } else {
-                let dictionaries = [BillRecord]()
-                ud?.setObject(dictionaries, forKey: UserManager.recordKey)
-                return dictionaries
+                count = 0
             }
         }
-        set {
+        
+        subscript (i: Int) -> BillRecord {
+            mutating get {
+                if let records = ud?.objectForKey(UserManager.recordKey) {
+                    let records = records as! [[String:String]]
+                    count = records.count
+                    return BillRecord(rawRecord: records[i])
+                } else {
+                    let records: [[String:String]] = []
+                    count = records.count
+                    ud?.setObject(records, forKey: UserManager.recordKey)
+                    return BillRecord()
+                }
+            }
         }
+        
     }
     
     // user.addnewrecord()
@@ -165,9 +187,12 @@ class UserManager: NSObject {
     func addNewRecord(bill: String, tipPercent: String, total: String) {
 
         let date = formatter!.stringFromDate(NSDate())
-        let record: BillRecord = BillRecord(bill: bill, tipPercent: tipPercent, total: total, date: date)
-        var r = records
-        r?.append(record)
-        ud?.setObject(r, forKey: UserManager.recordKey)
+        let record: [String:String] = [BillRecord.billRecordKey: bill,
+                                       BillRecord.tipPercentRecordKey: tipPercent,
+                                       BillRecord.totalRecordKey: total,
+                                       BillRecord.dateRecordKey: date]
+        var records = ud?.objectForKey(UserManager.recordKey) as! [[String:String]]
+        records.append(record)
+        ud?.setObject(records, forKey: UserManager.recordKey)
     }
 }

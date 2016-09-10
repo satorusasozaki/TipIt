@@ -21,11 +21,9 @@ class HistoryDetailViewController: UIViewController {
         let user = UserManager()
         let record = user.records![index!]
         
-// Shoud make these get methods?
-        
-        dateLabel.text = record[UserManager.dateRecordKey]
-        billLabel.text = record[UserManager.billRecordKey]
-        tipAmountLabel.text = record[UserManager.tipPercentRecordKey]
-        totalAmountLabel.text = record[UserManager.totalRecordKey]
+        dateLabel.text = record.date
+        billLabel.text = record.bill
+        tipAmountLabel.text = record.tipPercent
+        totalAmountLabel.text = record.total
     }
 }

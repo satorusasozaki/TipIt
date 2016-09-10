@@ -11,12 +11,10 @@ import UIKit
 class HistoryTableViewController: UITableViewController {
     
     private var user: UserManager?
-    private var records: [[String:String]]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         user = UserManager()
-        records = user?.records
     }
     
     // MARK: - Table view data source
@@ -26,14 +24,14 @@ class HistoryTableViewController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return records!.count
+        return user!.records!.count
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("historyCell", forIndexPath: indexPath) as! HistoryCell
-        let record = records![indexPath.row]
-        cell.dateLabel.text = record[UserManager.dateRecordKey]
-        cell.totalLabel.text = record[UserManager.totalRecordKey]
+        let record = user!.records![indexPath.row]
+        cell.dateLabel.text = record.date
+        cell.totalLabel.text = record.total
         return cell
     }
     

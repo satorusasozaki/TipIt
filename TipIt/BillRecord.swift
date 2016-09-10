@@ -15,10 +15,10 @@ class BillRecord: NSObject {
     static let totalRecordKey = "totalRecord"
     static let dateRecordKey = "dateRecord"
     
-    var bill: String?
-    var tipPercent: String?
-    var total: String?
-    var date: String?
+    let bill: String?
+    let tipPercent: String?
+    let total: String?
+    let date: String?
     
     override init() {
         bill = ""
