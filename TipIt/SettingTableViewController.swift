@@ -49,7 +49,12 @@ class SettingTableViewController: UITableViewController {
     }
     
     func addPercentToUD(sender: UISlider) {
-        let percent = round(100 * Double(sender.value / 100)) / 100
+        let percentInt = Int(sender.value)
+        let percentDouble = Double(percentInt)
+        let percent = percentDouble / 100
+        
+        print("percent: \(percent)")
+        print("sender.value: \(sender.value)")
         if (sender == changerMaxCell.percentSlider) {
             user?.percents![2] = percent
         } else if (sender == changerMidCell.percentSlider) {
