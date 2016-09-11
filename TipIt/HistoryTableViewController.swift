@@ -24,12 +24,12 @@ class HistoryTableViewController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return user!.records!.count
+        return user!.billRecords!.count
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("historyCell", forIndexPath: indexPath) as! HistoryCell
-        let record = user!.records![indexPath.row]
+        let record = user!.billRecords![indexPath.row]
         cell.dateLabel.text = record.date
         cell.totalLabel.text = record.total
         return cell

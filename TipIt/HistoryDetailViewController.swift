@@ -19,7 +19,7 @@ class HistoryDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         let user = UserManager()
-        let record = user.records![index!]
+        let record = user.billRecords![index!]
         
         dateLabel.text = record.date
         billLabel.text = record.bill

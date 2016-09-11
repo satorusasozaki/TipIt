@@ -6,9 +6,6 @@
 //  Copyright © 2016 Satoru Sasozaki. All rights reserved.
 //
 
-// Make functions computed variable to make it simple
-// Functions without parameter can likely be a computed variable
-
 import UIKit
 
 class UserManager: NSObject {
@@ -29,13 +26,13 @@ class UserManager: NSObject {
     
     private var ud: NSUserDefaults?
     var percents: Percents?
-    var records: Records?
+    var billRecords: Records?
     
     override init() {
         ud = NSUserDefaults.standardUserDefaults()
         // Instantiate Percents struct
         percents = Percents(ud: ud!)
-        records = Records(ud: ud!)
+        billRecords = Records(ud: ud!)
         formatter = NSDateFormatter()
         formatter!.dateFormat = NSDateFormatter.dateFormatFromTemplate(UserManager.dateFormat, options: 0, locale: NSLocale.currentLocale())
         super.init()
