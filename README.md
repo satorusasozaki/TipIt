@@ -76,18 +76,92 @@ class UserManger: NSObject {
 
 // In client of UserManger
 let user = UserManager()
-let billRecord = userManger.billRecords[0]
+let billRecord = userManger!.billRecords[0]
 let bill = billRecord[UserManager.billKey] // can be billRecord["invalidKey"]
 ```
 
 ####Challenge
-In order to make a client class of UserManger not able to put random keys in a dictionary item in billRecords array, I tried to make a model object called BillRecord to wrap dictionary items from BillRecords, and then to make UserManager return BillRecord object when BillRecords[0] is executed. And then I can get values that are used to in a dictionary with something like `billRecord.getBill()`
+In order to make a client class of UserManger not able to put random keys in a dictionary item in billRecords array, I tried to make a model object called BillRecord to wrap dictionary items from BillRecords, and then to make UserManager return BillRecord object when BillRecords[0] is executed. And then client class can get values that are used to in a dictionary with something like `billRecord.bill` but not `billRecord["key"]`. I get BillRecords array `[[String:String]]` from NSUserDefault and put items with type `[String:String]` into BillRecord model object for easy and safe access.
+
+```
+class BillRecord: NSObject {
+    // keys
+    static let billRecordKey = "billRecord"
+    static let tipPercentRecordKey = "tipPercentRecord"
+    static let totalRecordKey = "totalRecord"
+    static let dateRecordKey = "dateRecord"
+    
+    let bill: String?
+    let tipPercent: String?
+    let total: String?
+    let date: String?
+    
+    override init() {
+        bill = ""
+        tipPercent = ""
+        total = ""
+        date = ""
+        super.init()
+    }
+    
+    // init with an item from [[String:String]]
+    init(rawRecord: [String:String]) {
+        self.bill = rawRecord[BillRecord.billRecordKey]
+        self.tipPercent = rawRecord[BillRecord.tipPercentRecordKey]
+        self.total = rawRecord[BillRecord.totalRecordKey]
+        self.date = rawRecord[BillRecord.dateRecordKey]
+    }
+}
+```
 But getter in an Array type computed property can only return the whole array and I cannot specify what to do when an index is specified like billRecords[0].
+`billRecords[0]` returns an object of type `[String:String]` and there is no way to make billRecords return BillRecord object by using an Array property.
+
 
 
 ####Solution
-Make it struct and use subscript operator
-To make the above possible, I created the BillRecords as struct instead of an array variable and put subscript operator in it. With this way, I could specify for an array inside the struct what to return which in this case is BillRecord model object.
+I used `struct` and `subscript` operator to solve the issue.
+<a target="_blank" href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Subscripts.html">subscript</a> allows you to customize the behavior when an item in collection object is specified.
+
+
+```swift
+// UserManager.swift
+struct Records {
+    
+    let ud: NSUserDefaults?
+    var count: Int
+    
+    init(ud: NSUserDefaults) {
+        self.ud = ud
+        if let records = ud.objectForKey(UserManager.recordKey) {
+            let records = records as! [[String:String]]
+            count = records.count
+        } else {
+            count = 0
+        }
+    }
+    
+    subscript (i: Int) -> BillRecord {
+        mutating get {
+            if let records = ud?.objectForKey(UserManager.recordKey) {
+                let records = records as! [[String:String]]
+                count = records.count
+                return BillRecord(rawRecord: records[i])
+            } else {
+                let records: [[String:String]] = []
+                count = records.count
+                ud?.setObject(records, forKey: UserManager.recordKey)
+                return BillRecord()
+            }
+        }
+    }
+}
+
+// Client class of UserManager
+let records = userManager.records
+let record = records[0]
+let bill = record.bill 
+```
+
 billRecords[0] returns billRecord object and then, client class can get values with billRecord.bill but not billRecord[UserManager.billKey]. I give a least privilege to a client class of UserManger and the client class would never fail to get values from billRecord.
 
 

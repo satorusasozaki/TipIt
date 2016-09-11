@@ -139,8 +139,8 @@ class UserManager: NSObject {
     
     // MARK: - Records
     
-    // Wrapper for raw array of dictionary [[String : String]]
-    // Returns BillRecord with Records[index]
+    // Wrapper for a dictionary item of type [String : String] from an array [[String:String]] in NSUserDefault
+    // Returns BillRecord with BillRecords[index]
     // Client class can get each value in BillRecord with billRecord.bill easily
     // This gives client classes least privilege of manipulating records
     // Clients cannot put random key values to get values from records with records[random]
@@ -173,7 +173,6 @@ class UserManager: NSObject {
                 }
             }
         }
-        
     }
     
     func addNewRecord(bill: String, tipPercent: String, total: String) {
