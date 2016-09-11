@@ -47,7 +47,8 @@ Here's a walkthrough of implemented user stories:
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Notes
-### Used struct and subscript operator to customize what to return when array[0] is executed.
+Describe any challenges encountered while building the app.
+### Used struct and subscript operator to customize what to return when an item at a specified index of an array is about to return.
 
 ####Issue
 
