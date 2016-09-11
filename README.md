@@ -22,19 +22,21 @@ The following **optional** features are implemented:
 
 The following **additional** features are implemented:
 
-Tip View Controller
+- Tip View Controller
 
 * [x] Add icons in the navigation bar and the split labels
 * [x] Add labels that tells user the total amount split by 2-4 people
 * [x] Add Save button in the navigation bar to save the current bill to bill record
 * [x] Show an alert view when the save button is clicked
 
-Setting View Controller
+- Setting View Controller
 
 * [x] Add a static table view with grouped cells
 * [x] Add UISlider to change tip amounts
 * [x] Add a switch to change the theme color
 * [x] Add a cell to go to the bill record table view
+
+- Additional Screens
 
 * [x] Add history table view controller to show the bills that users have saved
 * [x] Add detail view controller to show the selected bill in detail in history table view
@@ -43,8 +45,26 @@ Setting View Controller
 ## Video Walkthrough
 
 Here's a walkthrough of implemented user stories:
-![uianimation](/gif/uianimation.gif)
-<img src='http://i.imgur.com/link/to/your/gif/file.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+
+Basic feature and animation:
+
+<img src="https://github.com/satorusasozaki/TipIt/blob/master/gif/uianimation.gif" width="300">
+
+Change currency symbol:
+
+<img src="https://github.com/satorusasozaki/TipIt/blob/master/gif/currencyLocale.gif" width="300">
+
+Change theme color:
+
+<img src="https://github.com/satorusasozaki/TipIt/blob/master/gif/colorTheme.gif" width="300">
+
+Change tip percents with UISlider:
+
+<img src="https://github.com/satorusasozaki/TipIt/blob/master/gif/percentSlider.gif" width="300">
+
+Save the current bill and see the detail:
+
+<img src="https://github.com/satorusasozaki/TipIt/blob/master/gif/billRecord.gif" width="300">
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
