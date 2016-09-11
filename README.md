@@ -47,20 +47,12 @@ Here's a walkthrough of implemented user stories:
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Notes
-### Used a struct and subscript operator to have an array of dictionary with type [[String : String]] return a model object bound to a dictionary item.
-
-Model object as a wrapper for BillRecords array of dictionary
-
-UserManager and BillRecord class
+### Used struct and subscript operator to customize what to return when array[0] is executed.
 
 ####Issue
 
-Client class could put unexpected random key into `BillRecord` dictionary to get values, which would cause unwanted nil.
-The content of `BillRecord` was
-`[billKey: bill, tipPercentKey: tipPercent, totalKey: total, dateKey, date]`
-
-`UserManager` class used to have `billRecords` as a public property that returns `[[String : String]]` array of dictionary. The class also used to have public static key constants to the dictionary in the array so that client of `UserManager` class can use them to get values from `BillRecords` array.
-Client class had to specify a key like `billRecords[0][UserManger.billKey]`. This could cause the client class to use invalid random key to a dictionary item from billRecords. Client class used to able to do like `billRecords[0]["invalidKey"]`.
+I had `UserManager` class that had billRecords property of type `[[String:String]]`. When the property gets accessed, it go get `[[String:String]]` object in `NSUserDefault` and return it. `userManger.billRecords` returns an Array object that has `[billKey: bill, tipPercentKey: tipPercent, totalKey: total, dateKey, date]`. `UserManager` also had public static properties of key to dictionary.
+In order for Client class of `UserManager` to get the dictionary value, it had to do like `userManager.billRecords[0][UserManager.billKey]`. This could cause the client class to put an invalid random key to a dictionary item from billRecords. Client class used to able to do like `billRecords[0]["invalidKey"]`.
 
 ```swift
 class UserManger: NSObject {
@@ -81,7 +73,8 @@ let bill = billRecord[UserManager.billKey] // can be billRecord["invalidKey"]
 ```
 
 ####Challenge
-In order to make a client class of UserManger not able to put random keys in a dictionary item in billRecords array, I tried to make a model object called BillRecord to wrap dictionary items from BillRecords, and then to make UserManager return BillRecord object when BillRecords[0] is executed. And then client class can get values that are used to in a dictionary with something like `billRecord.bill` but not `billRecord["key"]`. I get BillRecords array `[[String:String]]` from NSUserDefault and put items with type `[String:String]` into BillRecord model object for easy and safe access.
+In order to make a client class of UserManger not able to put random keys in a dictionary item in billRecords array, I made a model object called BillRecord to wrap the dictionary items in billRecords, and then try to make UserManager return a BillRecord object when BillRecords[index] is executed. With this way client class can get values that are used to in a dictionary with like `billRecord[index].bill` but not `billRecord[index]["key"]`. What I wanted to do is to make `billRecords` of type `[[String:String]]` return an object of type `BillRecord`.
+
 
 ```swift
 class BillRecord: NSObject {
@@ -117,15 +110,13 @@ But getter in an Array type computed property can only return the whole array an
 `billRecords[0]` returns an object of type `[String:String]` and there is no way to make billRecords return BillRecord object by using an Array property.
 
 
-
 ####Solution
-I used `struct` and `subscript` operator to solve the issue.
-<a target="_blank" href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Subscripts.html">subscript</a> allows you to customize the behavior when an item in collection object is specified.
-
+I used `struct` and `subscript` operator to make `billRecords[index]` return `BillRecord` object but not `[String:String]` object.
+<a target="_blank" href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Subscripts.html">subscript</a> allows you to customize the behavior when an item at a specified index of collection object is about to return.
 
 ```swift
 // UserManager.swift
-struct Records {
+struct BillRecords {
     
     let ud: NSUserDefaults?
     var count: Int
@@ -162,7 +153,8 @@ let record = records[0]
 let bill = record.bill 
 ```
 
-billRecords[0] returns billRecord object and then, client class can get values with billRecord.bill but not billRecord[UserManager.billKey]. I give a least privilege to a client class of UserManger and the client class would never fail to get values from billRecord.
+After making an instance of BillRecords a public property of UserManager,
+`billRecords[index]` became able to return `BillRecord` object and then, client class can now get values by `billRecord.bill` without caring about the keys like `billRecord[UserManager.billKey]` as it used to be before. I give a least privilege to a client class of UserManger and the client class would never fail to get values from billRecord.
 
 
 ## License

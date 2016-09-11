@@ -26,13 +26,13 @@ class UserManager: NSObject {
     
     private var ud: NSUserDefaults?
     var percents: Percents?
-    var billRecords: Records?
+    var billRecords: BillRecords?
     
     override init() {
         ud = NSUserDefaults.standardUserDefaults()
         // Instantiate Percents struct
         percents = Percents(ud: ud!)
-        billRecords = Records(ud: ud!)
+        billRecords = BillRecords(ud: ud!)
         formatter = NSDateFormatter()
         formatter!.dateFormat = NSDateFormatter.dateFormatFromTemplate(UserManager.dateFormat, options: 0, locale: NSLocale.currentLocale())
         super.init()
@@ -144,7 +144,7 @@ class UserManager: NSObject {
     // Client class can get each value in BillRecord with billRecord.bill easily
     // This gives client classes least privilege of manipulating records
     // Clients cannot put random key values to get values from records with records[random]
-    struct Records {
+    struct BillRecords {
         
         let ud: NSUserDefaults?
         var count: Int
