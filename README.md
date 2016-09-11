@@ -83,7 +83,7 @@ let bill = billRecord[UserManager.billKey] // can be billRecord["invalidKey"]
 ####Challenge
 In order to make a client class of UserManger not able to put random keys in a dictionary item in billRecords array, I tried to make a model object called BillRecord to wrap dictionary items from BillRecords, and then to make UserManager return BillRecord object when BillRecords[0] is executed. And then client class can get values that are used to in a dictionary with something like `billRecord.bill` but not `billRecord["key"]`. I get BillRecords array `[[String:String]]` from NSUserDefault and put items with type `[String:String]` into BillRecord model object for easy and safe access.
 
-```
+```swift
 class BillRecord: NSObject {
     // keys
     static let billRecordKey = "billRecord"
