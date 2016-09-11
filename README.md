@@ -25,14 +25,15 @@ Tip View Controller
 
 * [x] Add icons in the navigation bar and the split labels
 * [x] Add labels that tells user the total amount split by 2-4 people
-* [x] Add Save button in the navigation bar to save the current bill to history
-* [x] Add an alert view when the save button is clicked
+* [x] Add Save button in the navigation bar to save the current bill to bill record
+* [x] Show an alert view when the save button is clicked
 
 Setting View Controller
 
+* [x] Add a static table view with grouped cells
 * [x] Add UISlider to change tip amounts
 * [x] Add a switch to change the theme color
-* [x] Add a cell to go to the history table view
+* [x] Add a cell to go to the bill record table view
 
 * [x] Add history table view controller to show the bills that users have saved
 * [x] Add detail view controller to show the selected bill in detail in history table view
