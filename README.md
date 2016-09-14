@@ -2,7 +2,7 @@
 
 **TipIt** is a tip calculator application for iOS.
 
-Submitted by: **Satoru Sasozaki**
+Submitted by: <a target="_blank" href="http://satorusasozaki.com/">**Satoru Sasozaki**</a>
 
 Time spent: **40** hours spent in total
 
@@ -182,7 +182,7 @@ After making an instance of BillRecords a public property of UserManager,
 
 ## License
 
-    Copyright [yyyy] [name of copyright owner]
+    Copyright [2016] [Satoru Sasozaki]
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
