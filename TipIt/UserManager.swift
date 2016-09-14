@@ -182,8 +182,14 @@ class UserManager: NSObject {
                                        BillRecord.tipPercentRecordKey: tipPercent,
                                        BillRecord.totalRecordKey: total,
                                        BillRecord.dateRecordKey: date]
-        var records = ud?.objectForKey(UserManager.recordKey) as! [[String:String]]
-        records.append(record)
-        ud?.setObject(records, forKey: UserManager.recordKey)
+        if var records = ud?.objectForKey(UserManager.recordKey) as? [[String:String]] {
+            records.append(record)
+            ud?.setObject(records, forKey: UserManager.recordKey)
+        } else {
+            var records = [[String:String]]()
+            records.append(record)
+            ud?.setObject(records, forKey: UserManager.recordKey)
+        }
+
     }
 }
