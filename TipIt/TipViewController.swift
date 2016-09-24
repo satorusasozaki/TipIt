@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Font_Awesome_Swift
+//import Font_Awesome_Swift
 // https://github.com/Vaberer/Font-Awesome-Swift
 
 class TipViewController: UIViewController{
@@ -51,9 +51,9 @@ class TipViewController: UIViewController{
         super.viewDidLoad()
         
         // Add actions to views
-        billField.addTarget(self, action: #selector(TipViewController.setupLabelTexts), forControlEvents: UIControlEvents.EditingChanged)
-        billField.addTarget(self, action: #selector(TipViewController.animateViews), forControlEvents: UIControlEvents.EditingChanged)
-        percentControl.addTarget(self, action: #selector(TipViewController.setupLabelTexts), forControlEvents: UIControlEvents.ValueChanged)
+        billField.addTarget(self, action: #selector(TipViewController.setupLabelTexts), for: UIControlEvents.editingChanged)
+        billField.addTarget(self, action: #selector(TipViewController.animateViews), for: UIControlEvents.editingChanged)
+        percentControl.addTarget(self, action: #selector(TipViewController.setupLabelTexts), for: UIControlEvents.valueChanged)
 
         // Create managers
         user = UserManager()
@@ -72,13 +72,13 @@ class TipViewController: UIViewController{
         billFieldWasEmpty = billField.text?.isEmpty
         
         // set up icon
-        navigationItem.leftBarButtonItem?.FAIcon = FAType.FASave
-        navigationItem.rightBarButtonItem?.FAIcon = FAType.FACog
+        //navigationItem.leftBarButtonItem?.FAIcon = FAType.FASave
+        //navigationItem.rightBarButtonItem?.FAIcon = FAType.FACog
         
         // add observer to determine whether to set lastBill to billField when applicationDidBecomeActive
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(onResume), name: UIApplicationDidBecomeActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(onResume), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
         // add observer to save the last bill and its date to NSUserDefault
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(onSuspend), name: UIApplicationWillResignActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(onSuspend), name: NSNotification.Name.UIApplicationWillResignActive, object: nil)
     }
     
     // MARK: View setups
@@ -87,53 +87,53 @@ class TipViewController: UIViewController{
         let percents = user?.percents!
         for index in 0..<percents!.count {
             let percent = String(format: "%.0f", percents![index]*100)
-            percentControl.setTitle("\(percent)%", forSegmentAtIndex: index)
+            percentControl.setTitle("\(percent)%", forSegmentAt: index)
         }
     }
     
     // Get theme state from user and set it
     func setupTheme() {
         color?.colorStatus = user?.theme
-        navigationController?.navigationBar.tintColor = color?.mainColor
-        percentControl.tintColor = color?.mainColor
-        tipView.backgroundColor = color?.mainColor
-        totalView.backgroundColor = color?.totalColor
-        splitByTwoView.backgroundColor = color?.splitByTwoColor
-        splitByThreeView.backgroundColor = color?.splitByThreeColor
-        splitByFourView.backgroundColor = color?.splitByFourColor
+//        navigationController?.navigationBar.tintColor = color?.mainColor
+//        percentControl.tintColor = color?.mainColor
+//        tipView.backgroundColor = color?.mainColor
+//        totalView.backgroundColor = color?.totalColor
+//        splitByTwoView.backgroundColor = color?.splitByTwoColor
+//        splitByThreeView.backgroundColor = color?.splitByThreeColor
+//        splitByFourView.backgroundColor = color?.splitByFourColor
     }
     
     // Set text in all the labels
     func setupLabelTexts() {
         let bill = Double(billField.text!) ?? 0
         let percent = user?.percents![percentControl.selectedSegmentIndex]
-        let total = CalculatorBrain.getTotalAmount(bill, percent: percent!)
-        let tip = CalculatorBrain.getTipAmount(bill, percent: percent!)
+        let total = CalculatorBrain.getTotalAmount(bill: bill, percent: percent!)
+        let tip = CalculatorBrain.getTipAmount(bill: bill, percent: percent!)
         tipLabel.text = (user?.currencySymbol)! + String(format: "%.2f", tip!)
         totalLabel.text = (user?.currencySymbol)! + String(format: "%.2f", total!)
-        splitByTwoLabel.text = (user?.currencySymbol)! + String(format: "%.2f", CalculatorBrain.splitBy(total!, numOfPeople: 2)!)
-        splitByThreeLabel.text = (user?.currencySymbol)! + String(format: "%.2f", CalculatorBrain.splitBy(total!, numOfPeople: 3)!)
-        splitByFourLabel.text = (user?.currencySymbol)! + String(format: "%.2f", CalculatorBrain.splitBy(total!, numOfPeople: 4)!)
+        splitByTwoLabel.text = (user?.currencySymbol)! + String(format: "%.2f", CalculatorBrain.splitBy(total: total!, numOfPeople: 2)!)
+        splitByThreeLabel.text = (user?.currencySymbol)! + String(format: "%.2f", CalculatorBrain.splitBy(total: total!, numOfPeople: 3)!)
+        splitByFourLabel.text = (user?.currencySymbol)! + String(format: "%.2f", CalculatorBrain.splitBy(total: total!, numOfPeople: 4)!)
     }
     
     // FontAwesome
     func setupSplitIcons() {
-        firstPersonOfSplitByTwo.FAIcon = FAType.FAUser
-        secondPersonOfSplitByTwo.FAIcon = FAType.FAUser
-        firstPersonOfSplitByThree.FAIcon = FAType.FAUser
-        secondPersonOfSplitByThree.FAIcon = FAType.FAUser
-        thirdPersonOfSplitByThree.FAIcon = FAType.FAUser
-        firstPersonOfSplitByFour.FAIcon = FAType.FAUser
-        secondPersonOfSplitByFour.FAIcon = FAType.FAUser
-        thirdPersonOfSplitByFour.FAIcon = FAType.FAUser
-        fourthPersonOfSplitByFour.FAIcon = FAType.FAUser
+//        firstPersonOfSplitByTwo.FAIcon = FAType.FAUser
+//        secondPersonOfSplitByTwo.FAIcon = FAType.FAUser
+//        firstPersonOfSplitByThree.FAIcon = FAType.FAUser
+//        secondPersonOfSplitByThree.FAIcon = FAType.FAUser
+//        thirdPersonOfSplitByThree.FAIcon = FAType.FAUser
+//        firstPersonOfSplitByFour.FAIcon = FAType.FAUser
+//        secondPersonOfSplitByFour.FAIcon = FAType.FAUser
+//        thirdPersonOfSplitByFour.FAIcon = FAType.FAUser
+//        fourthPersonOfSplitByFour.FAIcon = FAType.FAUser
     }
     
     // MARK: Constraint
     
     // Set billField top constraint depending on if bill is empty or not
     func setupBillFieldTopConstraint() {
-        billViewTopConstraint.constant = (billField.text?.isEmpty)! ? UIScreen.mainScreen().bounds.size.height / 4 : 0
+        billViewTopConstraint.constant = (billField.text?.isEmpty)! ? UIScreen.main.bounds.size.height / 4 : 0
     }
     
     // MARK: Animation
@@ -144,14 +144,14 @@ class TipViewController: UIViewController{
         if (billFieldGetsEmpty()!) {
             setupBillFieldTopConstraint()
             self.labelsView.alpha = 1
-            UIView.animateWithDuration(0.4, animations: {
+            UIView.animate(withDuration: 0.4, animations: {
                 self.labelsView.alpha = 0
                 self.view.layoutIfNeeded()
             })
         } else if (billFieldGetsFilled()!){
             setupBillFieldTopConstraint()
             self.labelsView.alpha = 0
-            UIView.animateWithDuration(0.4, animations: {
+            UIView.animate(withDuration: 0.4, animations: {
                 self.labelsView.alpha = 1
                 self.view.layoutIfNeeded()
             })
@@ -187,22 +187,22 @@ class TipViewController: UIViewController{
     
     // Push to setting view controller
     @IBAction func onSettingButton(sender: UIBarButtonItem) {
-        let settingTableViewController = storyboard?.instantiateViewControllerWithIdentifier("SettingTableViewController")
+        let settingTableViewController = storyboard?.instantiateViewController(withIdentifier: "SettingTableViewController")
         navigationController?.pushViewController(settingTableViewController!, animated: true)
     }
     
     @IBAction func onSaveButton(sender: UIBarButtonItem) {
         // Get values needed from views and commit them to user
         let bill = billField.text!.isEmpty ? user!.currencySymbol! + "0.00" : user!.currencySymbol! + billField.text!
-        let tipPercent = percentControl.titleForSegmentAtIndex(percentControl.selectedSegmentIndex)!
+        let tipPercent = percentControl.titleForSegment(at: percentControl.selectedSegmentIndex)!
         let total = totalLabel.text!
-        user?.addNewRecord(bill, tipPercent: tipPercent, total: total)
+        user?.addNewRecord(bill: bill, tipPercent: tipPercent, total: total)
 
         // Show alert
-        let alert = UIAlertController(title: "Saved", message: "\(bill) is saved to the history" , preferredStyle: UIAlertControllerStyle.Alert)
-        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
-        alert.view.tintColor = color?.mainColor
-        self.presentViewController(alert, animated: true, completion: {})
+        let alert = UIAlertController(title: "Saved", message: "\(bill) is saved to the history" , preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+        //alert.view.tintColor = color?.mainColor
+        self.present(alert, animated: true, completion: {})
     }
     
     // MARK: - Methods Pluged into App Lifecycle
@@ -225,6 +225,6 @@ class TipViewController: UIViewController{
 // Prevent double from unnecessary 0 decimal value being added  
 extension Double {
     var cleanValue: String {
-        return self % 1 == 0 ? String(format: "%.0f", self) : String(self)
+        return self.truncatingRemainder(dividingBy: 1)  == 0 ? String(format: "%.0f", self) : String(self)
     }
 }

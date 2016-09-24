@@ -1,15 +1,3 @@
-PODS:
-  - Font-Awesome-Swift (1.4.8)
-  - UIColor_Hex_Swift (2.1)
+PODFILE CHECKSUM: 54eb1e8aa6f60dbea394b7a1f6e4e981bcde7bd0
 
-DEPENDENCIES:
-  - Font-Awesome-Swift (~> 1.4.8)
-  - UIColor_Hex_Swift (~> 2.1)
-
-SPEC CHECKSUMS:
-  Font-Awesome-Swift: 354c9440b0e4d692e31171c84091f3510e8f9468
-  UIColor_Hex_Swift: e91dc51f6bf252ec7bf74c8704ceedeeb7640c1c
-
-PODFILE CHECKSUM: c062785825a584604b466ecf6160e4d538e6fa57
-
-COCOAPODS: 1.0.1
+COCOAPODS: 1.1.0.rc.2

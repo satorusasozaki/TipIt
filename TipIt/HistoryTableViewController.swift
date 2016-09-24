@@ -19,27 +19,29 @@ class HistoryTableViewController: UITableViewController {
     
     // MARK: - Table view data source
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
+    
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return user!.billRecords!.count
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("historyCell", forIndexPath: indexPath) as! HistoryCell
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "historyCell", for: indexPath as IndexPath) as! HistoryCell
         let record = user!.billRecords![indexPath.row]
         cell.dateLabel.text = record.date
         cell.totalLabel.text = record.total
         return cell
     }
+
     
     // MARK: - Table view delegate
-    
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let historyDetailVC = storyboard?.instantiateViewControllerWithIdentifier("historyDetailViewController") as! HistoryDetailViewController
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let historyDetailVC = storyboard?.instantiateViewController(withIdentifier: "historyDetailViewController") as! HistoryDetailViewController
         historyDetailVC.index = indexPath.row
         self.navigationController?.pushViewController(historyDetailVC, animated: true)
     }
+
 }

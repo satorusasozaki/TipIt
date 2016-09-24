@@ -19,7 +19,7 @@ class CalculatorBrain: NSObject {
     }
     
     class func splitBy(total: Double, numOfPeople: Int) -> Double? {
-        return roundToTwo(total / Double(numOfPeople))
+        return roundToTwo(num: total / Double(numOfPeople))
     }
     
     class func roundToTwo(num: Double) -> Double? {

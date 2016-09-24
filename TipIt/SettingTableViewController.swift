@@ -25,19 +25,19 @@ class SettingTableViewController: UITableViewController {
         user = UserManager()
         tipViewController = navigationController?.viewControllers[0] as? TipViewController
         themeSwitch.setOn((user?.theme)!, animated: true)
-        setupPercentCell(changerMaxCell, text: "Max", index: 2)
-        setupPercentCell(changerMidCell, text: "Mid", index: 1)
-        setupPercentCell(changerMinCell, text: "Min", index: 0)
+        setupPercentCell(cell: changerMaxCell, text: "Max", index: 2)
+        setupPercentCell(cell: changerMidCell, text: "Mid", index: 1)
+        setupPercentCell(cell: changerMinCell, text: "Min", index: 0)
         color = ColorManager(status: user!.theme!)
-        setupSliderColor(changerMaxCell.percentSlider)
-        setupSliderColor(changerMidCell.percentSlider)
-        setupSliderColor(changerMinCell.percentSlider)
+        setupSliderColor(slider: changerMaxCell.percentSlider)
+        setupSliderColor(slider: changerMidCell.percentSlider)
+        setupSliderColor(slider: changerMinCell.percentSlider)
     }
     
     // MARK: - Percent Cell
     
     func setupSliderColor(slider: UISlider) {
-        slider.tintColor = color?.mainColor
+        //slider.tintColor = color?.mainColor
     }
 
     func setupPercentCell(cell: ChangerCell, text: String, index: Int) {
@@ -45,7 +45,7 @@ class SettingTableViewController: UITableViewController {
         cell.percentSlider.setValue(percent, animated: true)
         cell.nameLabel.text = text
         cell.percentLabel.text = "\(String(format: "%.0f", percent))%"
-        cell.percentSlider.addTarget(self, action: #selector(addPercentToUD), forControlEvents: UIControlEvents.TouchUpInside)
+        cell.percentSlider.addTarget(self, action: #selector(addPercentToUD), for: UIControlEvents.touchUpInside)
     }
     
     func addPercentToUD(sender: UISlider) {
@@ -69,22 +69,23 @@ class SettingTableViewController: UITableViewController {
     // MARK: - Theme
     
     @IBAction func onThemeSwitch(sender: UISwitch) {
-        user?.theme = sender.on
+        user?.theme = sender.isOn
         tipViewController?.setupTheme()
         color?.colorStatus = user?.theme
-        setupSliderColor(changerMaxCell.percentSlider)
-        setupSliderColor(changerMidCell.percentSlider)
-        setupSliderColor(changerMinCell.percentSlider)
+        setupSliderColor(slider: changerMaxCell.percentSlider)
+        setupSliderColor(slider: changerMidCell.percentSlider)
+        setupSliderColor(slider: changerMinCell.percentSlider)
     }
     
     // MARK: - Transition to detail view
 
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if let cell = tableView.cellForRowAtIndexPath(indexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let cell = tableView.cellForRow(at: indexPath) {
             if cell == historyCell {
-                let historyTVC = storyboard?.instantiateViewControllerWithIdentifier("historyTableViewController") as! HistoryTableViewController
+                let historyTVC = storyboard?.instantiateViewController(withIdentifier: "historyTableViewController") as! HistoryTableViewController
                 self.navigationController?.pushViewController(historyTVC, animated: true)
             }
         }
     }
+
 }
