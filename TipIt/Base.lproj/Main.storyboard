@@ -366,12 +366,12 @@
                     <navigationItem key="navigationItem" id="8HM-dT-8Pr">
                         <barButtonItem key="leftBarButtonItem" title="Save" id="bhP-GG-j8a">
                             <connections>
-                                <action selector="onSaveButton:" destination="BYZ-38-t0r" id="o3X-1x-F5V"/>
+                                <action selector="onSaveButtonWithSender:" destination="BYZ-38-t0r" id="NCi-6g-PoO"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Setting" id="Adc-2s-Gwf">
                             <connections>
-                                <action selector="onSettingButton:" destination="BYZ-38-t0r" id="QOS-x6-U6n"/>
+                                <action selector="onSettingButtonWithSender:" destination="BYZ-38-t0r" id="rxC-qJ-1BD"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -407,7 +407,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
                 <tapGestureRecognizer id="JgP-aw-coB">
                     <connections>
-                        <action selector="onTapTipViewController:" destination="BYZ-38-t0r" id="BVm-nN-TQU"/>
+                        <action selector="onTapTipViewControllerWithSender:" destination="BYZ-38-t0r" id="Ujg-Lw-hCT"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>
