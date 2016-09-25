@@ -557,7 +557,7 @@
                                                     <frame key="frameInset" minX="289" minY="6" width="51" height="31"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <connections>
-                                                        <action selector="onThemeSwitch:" destination="PP8-uM-Lx0" eventType="valueChanged" id="YNR-Ci-wyU"/>
+                                                        <action selector="onThemeSwitchWithSender:" destination="PP8-uM-Lx0" eventType="valueChanged" id="sXh-G1-rmX"/>
                                                     </connections>
                                                 </switch>
                                             </subviews>
@@ -597,7 +597,7 @@
                         <outlet property="changerMidCell" destination="eBu-AH-TDD" id="hhO-Ak-7wZ"/>
                         <outlet property="changerMinCell" destination="KCR-BZ-67V" id="Swb-YH-hNN"/>
                         <outlet property="historyCell" destination="UIx-dP-BrE" id="zlf-x2-LeH"/>
-                        <outlet property="themeSwitch" destination="suU-Xw-r8k" id="qwK-Tk-0Xz"/>
+                        <outlet property="themeSwitch" destination="suU-Xw-r8k" id="UUz-7T-nVE"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2Hn-w0-nHc" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -789,7 +789,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Ry1-u1-CAr" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="KwS-3d-DrR">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="KwS-3d-DrR">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" red="0.12941176469999999" green="0.59999999999999998" blue="0.39607843139999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

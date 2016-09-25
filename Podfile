@@ -6,8 +6,9 @@ target 'TipIt' do
   use_frameworks!
 
   # Pods for TipIt
-#  pod 'UIColor_Hex_Swift', '~> 2.1'
+  pod 'UIColor_Hex_Swift', :git => 'https://github.com/yeahdongcn/UIColor-Hex-Swift.git', :branch => 'Swift-3.0'
 #  pod 'Font-Awesome-Swift', '~> 1.4.8'
+  pod 'Font-Awesome-Swift', :git => 'https://github.com/Vaberer/Font-Awesome-Swift.git', :branch => 'swift-3'
   target 'TipItTests' do
     inherit! :search_paths
     # Pods for testing

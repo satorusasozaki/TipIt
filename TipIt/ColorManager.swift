@@ -7,7 +7,7 @@
 //
 
 import Foundation
-//import UIColor_Hex_Swift
+import UIColor_Hex_Swift
 //https://github.com/yeahdongcn/UIColor-Hex-Swift
 
 class ColorManager: NSObject {
@@ -34,34 +34,34 @@ class ColorManager: NSObject {
                                                   splitByTwo: "#e8b906",
                                                   splitByThree: "#f9c80e",
                                                   splitByFour: "#face27"]
-//    
-//    var mainColor: UIColor {
-//        get {
-//            return colorStatus! ? UIColor(rgba: ColorManager.green[ColorManager.general]!) : UIColor(rgba: ColorManager.yellow[ColorManager.general]!)
-//        }
-//    }
-//
-//    var totalColor: UIColor {
-//        get {
-//            return colorStatus! ? UIColor(rgba: ColorManager.green[ColorManager.total]!) : UIColor(rgba: ColorManager.yellow[ColorManager.total]!)
-//        }
-//    }
-//    
-//    var splitByTwoColor: UIColor {
-//        get {
-//            return colorStatus! ? UIColor(rgba: ColorManager.green[ColorManager.splitByTwo]!) : UIColor(rgba: ColorManager.yellow[ColorManager.splitByTwo]!)
-//        }
-//    }
-//    
-//    var splitByThreeColor: UIColor {
-//        get {
-//            return colorStatus! ? UIColor(rgba: ColorManager.green[ColorManager.splitByThree]!) : UIColor(rgba: ColorManager.yellow[ColorManager.splitByThree]!)
-//        }
-//    }
-//    
-//    var splitByFourColor: UIColor {
-//        get {
-//            return colorStatus! ? UIColor(rgba: ColorManager.green[ColorManager.splitByFour]!) : UIColor(rgba: ColorManager.yellow[ColorManager.splitByFour]!)
-//        }
-//    }
+    
+    var mainColor: UIColor {
+        get {
+            return colorStatus! ? UIColor(ColorManager.green[ColorManager.general]!) : UIColor(ColorManager.yellow[ColorManager.general]!)
+        }
+    }
+
+    var totalColor: UIColor {
+        get {
+            return colorStatus! ? UIColor(ColorManager.green[ColorManager.total]!) : UIColor(ColorManager.yellow[ColorManager.total]!)
+        }
+    }
+    
+    var splitByTwoColor: UIColor {
+        get {
+            return colorStatus! ? UIColor(ColorManager.green[ColorManager.splitByTwo]!) : UIColor(ColorManager.yellow[ColorManager.splitByTwo]!)
+        }
+    }
+    
+    var splitByThreeColor: UIColor {
+        get {
+            return colorStatus! ? UIColor(ColorManager.green[ColorManager.splitByThree]!) : UIColor(ColorManager.yellow[ColorManager.splitByThree]!)
+        }
+    }
+    
+    var splitByFourColor: UIColor {
+        get {
+            return colorStatus! ? UIColor(ColorManager.green[ColorManager.splitByFour]!) : UIColor(ColorManager.yellow[ColorManager.splitByFour]!)
+        }
+    }
 }

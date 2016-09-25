@@ -37,7 +37,7 @@ class SettingTableViewController: UITableViewController {
     // MARK: - Percent Cell
     
     func setupSliderColor(slider: UISlider) {
-        //slider.tintColor = color?.mainColor
+        slider.tintColor = color?.mainColor
     }
 
     func setupPercentCell(cell: ChangerCell, text: String, index: Int) {

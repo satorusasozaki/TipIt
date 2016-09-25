@@ -1,3 +1,31 @@
-PODFILE CHECKSUM: 54eb1e8aa6f60dbea394b7a1f6e4e981bcde7bd0
+PODS:
+  - Font-Awesome-Swift (1.4.8)
+  - UIColor_Hex_Swift (2.1)
+
+DEPENDENCIES:
+  - Font-Awesome-Swift (from `https://github.com/Vaberer/Font-Awesome-Swift.git`, branch `swift-3`)
+  - UIColor_Hex_Swift (from `https://github.com/yeahdongcn/UIColor-Hex-Swift.git`, branch `Swift-3.0`)
+
+EXTERNAL SOURCES:
+  Font-Awesome-Swift:
+    :branch: swift-3
+    :git: https://github.com/Vaberer/Font-Awesome-Swift.git
+  UIColor_Hex_Swift:
+    :branch: Swift-3.0
+    :git: https://github.com/yeahdongcn/UIColor-Hex-Swift.git
+
+CHECKOUT OPTIONS:
+  Font-Awesome-Swift:
+    :commit: 1e07d338259bfffc245dc9d4b872b9c97972cf26
+    :git: https://github.com/Vaberer/Font-Awesome-Swift.git
+  UIColor_Hex_Swift:
+    :commit: f5420efc3ce48796a450dc862202f5758ce4a58b
+    :git: https://github.com/yeahdongcn/UIColor-Hex-Swift.git
+
+SPEC CHECKSUMS:
+  Font-Awesome-Swift: 354c9440b0e4d692e31171c84091f3510e8f9468
+  UIColor_Hex_Swift: e91dc51f6bf252ec7bf74c8704ceedeeb7640c1c
+
+PODFILE CHECKSUM: bcfd764d606d7bdc778ecaebb3ad67306a44e172
 
 COCOAPODS: 1.1.0.rc.2

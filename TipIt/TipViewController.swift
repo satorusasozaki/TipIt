@@ -72,8 +72,8 @@ class TipViewController: UIViewController{
         billFieldWasEmpty = billField.text?.isEmpty
         
         // set up icon
-        //navigationItem.leftBarButtonItem?.FAIcon = FAType.FASave
-        //navigationItem.rightBarButtonItem?.FAIcon = FAType.FACog
+//        navigationItem.leftBarButtonItem?.FAIcon = FAType.FASave
+//        navigationItem.rightBarButtonItem?.FAIcon = FAType.FACog
         
         // add observer to determine whether to set lastBill to billField when applicationDidBecomeActive
         NotificationCenter.default.addObserver(self, selector: #selector(onResume), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
@@ -94,13 +94,13 @@ class TipViewController: UIViewController{
     // Get theme state from user and set it
     func setupTheme() {
         color?.colorStatus = user?.theme
-//        navigationController?.navigationBar.tintColor = color?.mainColor
-//        percentControl.tintColor = color?.mainColor
-//        tipView.backgroundColor = color?.mainColor
-//        totalView.backgroundColor = color?.totalColor
-//        splitByTwoView.backgroundColor = color?.splitByTwoColor
-//        splitByThreeView.backgroundColor = color?.splitByThreeColor
-//        splitByFourView.backgroundColor = color?.splitByFourColor
+        navigationController?.navigationBar.tintColor = color?.mainColor
+        percentControl.tintColor = color?.mainColor
+        tipView.backgroundColor = color?.mainColor
+        totalView.backgroundColor = color?.totalColor
+        splitByTwoView.backgroundColor = color?.splitByTwoColor
+        splitByThreeView.backgroundColor = color?.splitByThreeColor
+        splitByFourView.backgroundColor = color?.splitByFourColor
     }
     
     // Set text in all the labels
